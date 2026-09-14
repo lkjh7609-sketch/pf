@@ -1,35 +1,42 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 interface Post {
-  id: number
+  id: string
   title: string
   author: string
-  date: string
   content: string
-  files?: { name: string; url: string }[]
+  files?: { name: string; url: string }[] | null
+  createdAt: string
 }
 
-// 임시 게시글 데이터
-const SAMPLE_POSTS: Post[] = [
-  {
-    id: 1,
-    title: '첫 번째 게시글입니다',
-    author: 'Ben Lee',
-    date: '2026-09-14',
-    content: '게시판 테스트 글입니다.',
-    files: [],
-  },
-]
-
 export default function BoardPage() {
-  const [posts, setPosts] = useState<Post[]>(SAMPLE_POSTS)
+  const [posts, setPosts] = useState<Post[]>([])
+  const [loading, setLoading] = useState(true)
   const [selectedPost, setSelectedPost] = useState<Post | null>(null)
   const [isWriting, setIsWriting] = useState(false)
   const [newPost, setNewPost] = useState({ title: '', content: '' })
+  const [submitting, setSubmitting] = useState(false)
+
+  useEffect(() => {
+    fetchPosts()
+  }, [])
+
+  async function fetchPosts() {
+    try {
+      const response = await fetch('/api/posts')
+      if (!response.ok) throw new Error('Failed to fetch posts')
+      const data = await response.json()
+      setPosts(data)
+    } catch (error) {
+      console.error('Error fetching posts:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handlePostClick = (post: Post) => {
     setSelectedPost(post)
@@ -40,21 +47,43 @@ export default function BoardPage() {
     setIsWriting(false)
   }
 
-  const handleNewPost = () => {
+  const handleNewPost = async () => {
     if (!newPost.title || !newPost.content) return
 
-    const post: Post = {
-      id: posts.length + 1,
-      title: newPost.title,
-      author: 'Ben Lee',
-      date: new Date().toISOString().split('T')[0],
-      content: newPost.content,
-      files: [],
-    }
+    setSubmitting(true)
+    try {
+      const response = await fetch('/api/posts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: newPost.title,
+          author: 'Ben Lee',
+          content: newPost.content,
+        }),
+      })
 
-    setPosts([post, ...posts])
-    setNewPost({ title: '', content: '' })
-    setIsWriting(false)
+      if (!response.ok) throw new Error('Failed to create post')
+
+      const createdPost = await response.json()
+      setPosts([createdPost, ...posts])
+      setNewPost({ title: '', content: '' })
+      setIsWriting(false)
+    } catch (error) {
+      console.error('Error creating post:', error)
+      alert('게시글 작성에 실패했습니다.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    })
   }
 
   return (
@@ -107,25 +136,37 @@ export default function BoardPage() {
               </motion.button>
             </div>
 
-            <div className="space-y-4">
-              {posts.map((post, index) => (
-                <motion.div
-                  key={post.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  onClick={() => handlePostClick(post)}
-                  className="p-6 border border-gray-200 rounded-lg hover:border-beige-dark transition-colors cursor-pointer"
-                >
-                  <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
-                  <div className="flex gap-4 text-sm text-gray-600">
-                    <span>{post.author}</span>
-                    <span>·</span>
-                    <span>{post.date}</span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+            {loading ? (
+              <div className="text-center py-20 text-gray-400">
+                <p className="text-4xl mb-4">⏳</p>
+                <p>Loading posts...</p>
+              </div>
+            ) : posts.length === 0 ? (
+              <div className="text-center py-20 text-gray-400">
+                <p className="text-4xl mb-4">📝</p>
+                <p>아직 게시글이 없습니다.</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {posts.map((post, index) => (
+                  <motion.div
+                    key={post.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    onClick={() => handlePostClick(post)}
+                    className="p-6 border border-gray-200 rounded-lg hover:border-beige-dark transition-colors cursor-pointer"
+                  >
+                    <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
+                    <div className="flex gap-4 text-sm text-gray-600">
+                      <span>{post.author}</span>
+                      <span>·</span>
+                      <span>{formatDate(post.createdAt)}</span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </motion.div>
         )}
 
@@ -150,13 +191,13 @@ export default function BoardPage() {
               <div className="flex gap-4 text-sm text-gray-600 mb-6 pb-6 border-b border-gray-300">
                 <span>{selectedPost.author}</span>
                 <span>·</span>
-                <span>{selectedPost.date}</span>
+                <span>{formatDate(selectedPost.createdAt)}</span>
               </div>
               <div className="prose max-w-none whitespace-pre-wrap">
                 {selectedPost.content}
               </div>
 
-              {selectedPost.files && selectedPost.files.length > 0 && (
+              {selectedPost.files && Array.isArray(selectedPost.files) && selectedPost.files.length > 0 && (
                 <div className="mt-8 pt-6 border-t border-gray-300">
                   <h3 className="font-semibold mb-3">첨부파일</h3>
                   <div className="space-y-2">
@@ -204,6 +245,7 @@ export default function BoardPage() {
                     onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
                     className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-beige-dark"
                     placeholder="제목을 입력하세요"
+                    disabled={submitting}
                   />
                 </div>
 
@@ -215,6 +257,7 @@ export default function BoardPage() {
                     rows={12}
                     className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-beige-dark resize-none"
                     placeholder="내용을 입력하세요"
+                    disabled={submitting}
                   />
                 </div>
 
@@ -224,6 +267,7 @@ export default function BoardPage() {
                     whileTap={{ scale: 0.95 }}
                     onClick={handleBack}
                     className="px-6 py-2 border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+                    disabled={submitting}
                   >
                     취소
                   </motion.button>
@@ -231,9 +275,10 @@ export default function BoardPage() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleNewPost}
-                    className="px-6 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors"
+                    className="px-6 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors disabled:opacity-50"
+                    disabled={submitting || !newPost.title || !newPost.content}
                   >
-                    작성완료
+                    {submitting ? '작성 중...' : '작성완료'}
                   </motion.button>
                 </div>
               </div>
