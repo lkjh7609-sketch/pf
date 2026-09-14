@@ -10,7 +10,10 @@ export default function Contact() {
     <section id="contact" className="py-24 px-6 bg-white dark:bg-gray-900">
       <div className="max-w-6xl mx-auto text-center">
         <AnimatedSection>
-          <h2 className="text-3xl font-light mb-4 text-black dark:text-white">{messages.contact.title}</h2>
+          {messages.contact.title && (
+            <h2 className="text-3xl font-light mb-4 text-black dark:text-white">{messages.contact.title}</h2>
+          )}
+          <div className="w-16 h-px bg-gray-300 dark:bg-gray-600 mx-auto mb-6"></div>
           <p className="text-gray-500 dark:text-gray-400 font-light mb-8">
             {messages.contact.subtitle}
           </p>

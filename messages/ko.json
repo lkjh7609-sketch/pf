@@ -6,7 +6,7 @@
   },
   "hero": {
     "name": "Ben Lee",
-    "title": "Developer",
+    "title": "ABAP, Back-end Developer",
     "description": "안녕하세요. 이재헌입니다.",
     "description2": "다양한 프로젝트와 생각을 공유합니다."
   },
@@ -21,7 +21,7 @@
     "empty": "글이 준비 중입니다"
   },
   "contact": {
-    "title": "Get In Touch",
+    "title": "",
     "subtitle": "프로젝트 문의나 협업 제안이 있으시면 연락주세요",
     "copyright": "© 2026 Ben Lee. All rights reserved."
   },

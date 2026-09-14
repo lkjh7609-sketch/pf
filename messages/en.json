@@ -6,7 +6,7 @@
   },
   "hero": {
     "name": "Ben Lee",
-    "title": "Developer",
+    "title": "ABAP, Back-end Developer",
     "description": "Hello, I'm Jaeheon Lee (Ben Lee).",
     "description2": "I share various projects and thoughts."
   },
@@ -21,7 +21,7 @@
     "empty": "Posts coming soon"
   },
   "contact": {
-    "title": "Get In Touch",
+    "title": "",
     "subtitle": "Feel free to reach out for project inquiries or collaboration proposals",
     "copyright": "© 2026 Ben Lee. All rights reserved."
   },
