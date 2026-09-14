@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  thumbnail   String
+  images      String[] // Array of image URLs
+  link        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("projects")
+}
+
+model Writing {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  thumbnail   String
+  images      String[] // Array of image URLs
+  link        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("writings")
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  author    String
+  content   String   @db.Text
+  files     Json?    // Store files as JSON array: [{name: string, url: string}]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("posts")
+}
