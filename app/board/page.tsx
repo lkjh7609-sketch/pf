@@ -66,12 +66,12 @@ export default function BoardPage() {
         className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm"
       >
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-end items-center">
-          <div className="flex gap-8">
+          <div className="flex gap-8 items-center">
             <Link href="/">
               <motion.span
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="text-sm font-semibold hover:text-beige-dark transition-colors cursor-pointer"
+                className="text-sm font-medium hover:text-beige-dark transition-colors cursor-pointer"
               >
                 Home
               </motion.span>
@@ -79,7 +79,7 @@ export default function BoardPage() {
             <motion.span
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="text-sm font-semibold cursor-pointer"
+              className="text-sm font-medium cursor-pointer"
             >
               Board
             </motion.span>
