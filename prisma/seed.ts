@@ -50,7 +50,6 @@ async function main() {
       title: '첫 번째 게시글입니다',
       author: 'Ben Lee',
       content: '게시판 테스트 글입니다.',
-      files: null,
     },
   })
   console.log('✅ Created sample post')
