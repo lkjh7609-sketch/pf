@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect, useCallback } from 'react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface NavItem {
   name: string
@@ -9,15 +10,16 @@ interface NavItem {
   isLink?: boolean
 }
 
-const NAV_ITEMS: NavItem[] = [
-  { name: 'Board', id: 'board', isLink: true },
-  { name: 'Writing', id: 'writings' },
-  { name: 'Contact', id: 'contact' },
-]
-
 export default function Navigation() {
+  const { messages } = useLanguage()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
+
+  const NAV_ITEMS: NavItem[] = [
+    { name: messages.nav.board, id: 'board', isLink: true },
+    { name: messages.nav.writing, id: 'writings' },
+    { name: messages.nav.contact, id: 'contact' },
+  ]
 
   useEffect(() => {
     const handleScroll = () => {
@@ -74,7 +76,7 @@ export default function Navigation() {
       aria-label="메인 네비게이션"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled || isMobileOpen
-          ? 'bg-white/80 backdrop-blur-md shadow-sm'
+          ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm'
           : 'bg-transparent'
       }`}
     >

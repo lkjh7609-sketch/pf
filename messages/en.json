@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "board": "Board",
+    "writing": "Writing",
+    "contact": "Contact"
+  },
+  "hero": {
+    "name": "Ben Lee",
+    "title": "Developer",
+    "description": "Hello, I'm Jaeheon Lee (Ben Lee).",
+    "description2": "I share various projects and thoughts."
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "Projects I've worked on",
+    "empty": "Projects coming soon"
+  },
+  "writings": {
+    "title": "Writing",
+    "subtitle": "Sharing thoughts and experiences",
+    "empty": "Posts coming soon"
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "subtitle": "Feel free to reach out for project inquiries or collaboration proposals",
+    "copyright": "© 2026 Ben Lee. All rights reserved."
+  },
+  "board": {
+    "title": "Board",
+    "backToHome": "Back to Home",
+    "empty": "No posts yet",
+    "createFirst": "Create your first post!",
+    "viewCount": "views",
+    "closeDetail": "Close detail view"
+  },
+  "gallery": {
+    "viewDetail": "View detail",
+    "close": "Close gallery",
+    "imageError": "Image could not be loaded",
+    "of": "of"
+  }
+}

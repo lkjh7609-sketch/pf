@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "board": "Board",
+    "writing": "Writing",
+    "contact": "Contact"
+  },
+  "hero": {
+    "name": "Ben Lee",
+    "title": "Developer",
+    "description": "안녕하세요. 이재헌입니다.",
+    "description2": "다양한 프로젝트와 생각을 공유합니다."
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "내가 작업한 프로젝트들",
+    "empty": "프로젝트가 준비 중입니다"
+  },
+  "writings": {
+    "title": "Writing",
+    "subtitle": "생각과 경험을 공유합니다",
+    "empty": "글이 준비 중입니다"
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "subtitle": "프로젝트 문의나 협업 제안이 있으시면 연락주세요",
+    "copyright": "© 2026 Ben Lee. All rights reserved."
+  },
+  "board": {
+    "title": "게시판",
+    "backToHome": "홈으로 돌아가기",
+    "empty": "아직 게시글이 없습니다",
+    "createFirst": "첫 게시글을 작성해보세요!",
+    "viewCount": "조회",
+    "closeDetail": "상세 보기 닫기"
+  },
+  "gallery": {
+    "viewDetail": "상세 보기",
+    "close": "갤러리 닫기",
+    "imageError": "이미지를 불러올 수 없습니다",
+    "of": "/"
+  }
+}
