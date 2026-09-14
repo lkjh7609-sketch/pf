@@ -1,60 +1,175 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useCallback } from 'react'
+
+interface NavItem {
+  name: string
+  id: string
+  isLink?: boolean
+}
+
+const NAV_ITEMS: NavItem[] = [
+  { name: 'Board', id: 'board', isLink: true },
+  { name: 'Writing', id: 'writings' },
+  { name: 'Contact', id: 'contact' },
+]
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const scrollToSection = (id: string) => {
+  // 모바일 메뉴 열릴 때 스크롤 잠금
+  useEffect(() => {
+    if (isMobileOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMobileOpen])
+
+  // Escape 키로 모바일 메뉴 닫기
+  useEffect(() => {
+    if (!isMobileOpen) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobileOpen(false)
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isMobileOpen])
+
+  const scrollToSection = useCallback((id: string) => {
     const element = document.getElementById(id)
     element?.scrollIntoView({ behavior: 'smooth' })
-  }
+    setIsMobileOpen(false)
+  }, [])
+
+  const handleNavClick = useCallback(
+    (item: NavItem) => {
+      if (item.isLink) {
+        setIsMobileOpen(false)
+      } else {
+        scrollToSection(item.id)
+      }
+    },
+    [scrollToSection]
+  )
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
+      role="navigation"
+      aria-label="메인 네비게이션"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
+        isScrolled || isMobileOpen
+          ? 'bg-white/80 backdrop-blur-md shadow-sm'
+          : 'bg-transparent'
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+        <button
           onClick={() => scrollToSection('hero')}
-          className="text-xl font-bold"
+          className="text-xl font-bold hover:opacity-70 transition-opacity"
+          aria-label="홈으로 이동"
         >
-          
-        </motion.button>
+          Ben Lee
+        </button>
 
-        <div className="flex gap-8">
-          {[
-            { name: 'Projects', id: 'projects' },
-            { name: 'Writing', id: 'writings' },
-            { name: 'Contact', id: 'contact' },
-          ].map((item) => (
-            <motion.button
+        {/* 데스크톱 메뉴 */}
+        <div className="hidden md:flex gap-8" role="menubar">
+          {NAV_ITEMS.map((item) => (
+            <a
               key={item.id}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => scrollToSection(item.id)}
-              className="text-sm hover:text-beige-dark transition-colors"
+              role="menuitem"
+              href={item.isLink ? '/board' : `#${item.id}`}
+              onClick={
+                item.isLink
+                  ? undefined
+                  : (e) => {
+                      e.preventDefault()
+                      handleNavClick(item)
+                    }
+              }
+              className="text-sm hover:text-beige-dark transition-colors cursor-pointer"
             >
               {item.name}
-            </motion.button>
+            </a>
           ))}
         </div>
+
+        {/* 모바일 햄버거 버튼 */}
+        <button
+          className="md:hidden flex flex-col gap-1.5 p-2"
+          onClick={() => setIsMobileOpen(!isMobileOpen)}
+          aria-expanded={isMobileOpen}
+          aria-controls="mobile-menu"
+          aria-label={isMobileOpen ? '메뉴 닫기' : '메뉴 열기'}
+        >
+          <span
+            className={`block w-5 h-0.5 bg-black transition-all duration-300 ${
+              isMobileOpen ? 'rotate-45 translate-y-2' : ''
+            }`}
+          />
+          <span
+            className={`block w-5 h-0.5 bg-black transition-all duration-300 ${
+              isMobileOpen ? 'opacity-0' : ''
+            }`}
+          />
+          <span
+            className={`block w-5 h-0.5 bg-black transition-all duration-300 ${
+              isMobileOpen ? '-rotate-45 -translate-y-2' : ''
+            }`}
+          />
+        </button>
       </div>
+
+      {/* 모바일 메뉴 */}
+      <AnimatePresence>
+        {isMobileOpen && (
+          <motion.div
+            id="mobile-menu"
+            role="menu"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden overflow-hidden border-t border-gray-100"
+          >
+            <div className="px-6 py-4 space-y-1 bg-white/95 backdrop-blur-md">
+              {NAV_ITEMS.map((item) => (
+                <a
+                  key={item.id}
+                  role="menuitem"
+                  href={item.isLink ? '/board' : `#${item.id}`}
+                  onClick={
+                    item.isLink
+                      ? () => setIsMobileOpen(false)
+                      : (e) => {
+                          e.preventDefault()
+                          handleNavClick(item)
+                        }
+                  }
+                  className="block py-3 text-sm hover:text-beige-dark transition-colors"
+                >
+                  {item.name}
+                </a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   )
 }

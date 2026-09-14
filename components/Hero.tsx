@@ -12,7 +12,7 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
         >
           <motion.h1
-            className="text-6xl md:text-4xl font-bold mb-6"
+            className="text-5xl md:text-7xl font-light tracking-tight mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -21,16 +21,16 @@ export default function Hero() {
           </motion.h1>
 
           <motion.p
-            className="text-2xl md:text-xl text-gray-700 mb-8 mt-8"
+            className="text-lg md:text-xl text-gray-500 font-light mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Back-end, ABAP Developer
+            Developer
           </motion.p>
 
           <motion.p
-            className="text-lg md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed mt-20"
+            className="text-base md:text-lg text-gray-600 font-light leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}

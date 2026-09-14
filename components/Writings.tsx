@@ -1,24 +1,24 @@
-'use client'
-
-import { motion } from 'framer-motion'
-import ImageGallery from './ImageGallery'
 import { writingsData } from '@/data/writings'
+import ImageGallery from './ImageGallery'
+import AnimatedSection from './AnimatedSection'
 
 export default function Writings() {
   return (
-    <section id="writings" className="min-h-screen py-24 px-6 bg-beige-light">
+    <section id="writings" className="min-h-screen py-24 px-6 bg-white">
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-4xl font-bold mb-4">Writing</h2>
-          <p className="text-gray-600 mb-32">생각과 경험을 공유합니다</p>
-        </motion.div>
+        <AnimatedSection>
+          <h2 className="text-3xl font-light mb-2">Writing</h2>
+          <p className="text-gray-500 font-light mb-16">생각과 경험을 공유합니다</p>
+        </AnimatedSection>
 
-        <ImageGallery items={writingsData} />
+        {writingsData.length > 0 ? (
+          <ImageGallery items={writingsData} />
+        ) : (
+          <div className="text-center py-20 text-gray-400 font-light">
+            <p className="text-4xl mb-4">✍️</p>
+            <p>글이 준비 중입니다</p>
+          </div>
+        )}
       </div>
     </section>
   )

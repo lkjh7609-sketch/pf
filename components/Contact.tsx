@@ -1,40 +1,25 @@
-'use client'
-
-import { motion } from 'framer-motion'
+import AnimatedSection from './AnimatedSection'
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-12 px-6 bg-black text-white">
+    <section id="contact" className="py-24 px-6">
       <div className="max-w-6xl mx-auto text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <p className="text-xl text-gray-300 mb-6">
+        <AnimatedSection>
+          <h2 className="text-3xl font-light mb-4">Get In Touch</h2>
+          <p className="text-gray-500 font-light mb-8">
             프로젝트 문의나 협업 제안이 있으시면 연락주세요
           </p>
-          
-          <motion.a
+          <a
             href="mailto:javerdose@gmail.com"
-            className="inline-block text-xl text-beige hover:text-beige-dark transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="inline-block px-8 py-3 border border-black text-sm font-light
+                       hover:bg-black hover:text-white transition-all duration-300"
           >
-            javerdose@yahoo.com
-          </motion.a>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-8 pt-6 border-t border-gray-800 text-sm text-gray-500"
-        >
-          <p>© 2026 Ben Lee. All rights reserved.</p>
-        </motion.div>
+            javerdose@gmail.com
+          </a>
+        </AnimatedSection>
+        <div className="mt-16 text-xs text-gray-400 font-light">
+          © 2026 Ben Lee. All rights reserved.
+        </div>
       </div>
     </section>
   )
