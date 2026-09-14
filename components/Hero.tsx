@@ -7,7 +7,7 @@ export default function Hero() {
   const { messages } = useLanguage()
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center px-6 bg-beige-light dark:bg-gray-900">
+    <section id="hero" className="min-h-screen flex items-center justify-center px-6 bg-beige-light">
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -15,7 +15,7 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
         >
           <motion.h1
-            className="text-4xl md:text-6xl font-light tracking-tight mb-4 text-black dark:text-white"
+            className="text-3xl md:text-5xl font-light tracking-tight mb-4 text-black"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -24,7 +24,7 @@ export default function Hero() {
           </motion.h1>
 
           <motion.p
-            className="text-lg md:text-xl text-gray-500 dark:text-gray-400 font-light mb-8"
+            className="text-lg md:text-xl text-gray-500 font-light mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -33,7 +33,7 @@ export default function Hero() {
           </motion.p>
 
           <motion.p
-            className="text-base md:text-lg text-gray-600 dark:text-gray-300 font-light leading-relaxed"
+            className="text-base md:text-lg text-gray-600 font-light leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -53,7 +53,7 @@ export default function Hero() {
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="text-4xl text-black dark:text-white"
+            className="text-4xl text-black"
           >
             ↓
           </motion.div>

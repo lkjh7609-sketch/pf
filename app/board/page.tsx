@@ -65,23 +65,13 @@ export default function BoardPage() {
         animate={{ y: 0 }}
         className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm"
       >
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="text-xl font-bold"
-            >
-              Ben Lee
-            </motion.button>
-          </Link>
-
+        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-end items-center">
           <div className="flex gap-8">
             <Link href="/">
               <motion.span
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="text-sm hover:text-beige-dark transition-colors cursor-pointer"
+                className="text-sm font-semibold hover:text-beige-dark transition-colors cursor-pointer"
               >
                 Home
               </motion.span>

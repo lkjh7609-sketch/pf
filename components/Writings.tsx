@@ -9,17 +9,17 @@ export default function Writings() {
   const { messages } = useLanguage()
 
   return (
-    <section id="writings" className="min-h-screen py-24 px-6 bg-white dark:bg-gray-900">
+    <section id="writings" className="min-h-screen py-24 px-6 bg-white">
       <div className="max-w-6xl mx-auto">
         <AnimatedSection>
-          <h2 className="text-3xl font-light mb-2 text-black dark:text-white">{messages.writings.title}</h2>
-          <p className="text-gray-500 dark:text-gray-400 font-light mb-16">{messages.writings.subtitle}</p>
+          <h2 className="text-3xl font-light mb-2 text-black">{messages.writings.title}</h2>
+          <p className="text-gray-500 font-light mb-16">{messages.writings.subtitle}</p>
         </AnimatedSection>
 
         {writingsData.length > 0 ? (
           <ImageGallery items={writingsData} />
         ) : (
-          <div className="text-center py-20 text-gray-400 dark:text-gray-500 font-light">
+          <div className="text-center py-20 text-gray-400 font-light">
             <p className="text-4xl mb-4">✍️</p>
             <p>{messages.writings.empty}</p>
           </div>
