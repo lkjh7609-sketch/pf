@@ -16,8 +16,8 @@ export default function Navigation() {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
 
   const NAV_ITEMS: NavItem[] = [
-    { name: messages.nav.projects, id: 'projects' },
     { name: messages.nav.writing, id: 'writings' },
+    { name: messages.nav.projects, id: 'projects' },
     { name: messages.nav.skills, id: 'skills' },
     { name: messages.nav.board, id: 'board', isLink: true },
     { name: messages.nav.guestbook, id: 'guestbook', isLink: true },
