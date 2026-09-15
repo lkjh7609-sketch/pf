@@ -83,7 +83,13 @@ export default function WritingsManager() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!formData.title || !formData.description || !formData.thumbnail) return
+
+    console.log('Form submitted with data:', formData)
+
+    if (!formData.title || !formData.description || !formData.thumbnail) {
+      alert('제목, 설명, 썸네일은 필수 항목입니다.')
+      return
+    }
 
     const payload = {
       title: formData.title,
@@ -96,6 +102,8 @@ export default function WritingsManager() {
       tags: formData.tags ? formData.tags.split(',').map(t => t.trim()).filter(Boolean) : [],
     }
 
+    console.log('Payload to send:', payload)
+
     setSubmitting(true)
     try {
       if (editingWriting) {
@@ -104,25 +112,44 @@ export default function WritingsManager() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         })
-        if (!response.ok) throw new Error('Failed to update writing')
+
+        console.log('Update response status:', response.status)
+
+        if (!response.ok) {
+          const errorData = await response.json()
+          console.error('Update error:', errorData)
+          throw new Error(errorData.error || 'Failed to update writing')
+        }
+
         const updated = await response.json()
         setWritings(writings.map(w => w.id === updated.id ? updated : w))
+        alert('글이 수정되었습니다.')
       } else {
         const response = await fetch('/api/writings', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         })
-        if (!response.ok) throw new Error('Failed to create writing')
+
+        console.log('Create response status:', response.status)
+
+        if (!response.ok) {
+          const errorData = await response.json()
+          console.error('Create error:', errorData)
+          throw new Error(errorData.error || 'Failed to create writing')
+        }
+
         const created = await response.json()
+        console.log('Created writing:', created)
         setWritings([created, ...writings])
+        alert('글이 생성되었습니다.')
       }
       setIsCreating(false)
       setFormData({ title: '', description: '', content: '', thumbnail: '', images: '', link: '', category: '', tags: '' })
       setEditingWriting(null)
     } catch (error) {
       console.error('Error saving writing:', error)
-      alert('글 저장에 실패했습니다.')
+      alert(`글 저장에 실패했습니다: ${error instanceof Error ? error.message : '알 수 없는 오류'}`)
     } finally {
       setSubmitting(false)
     }

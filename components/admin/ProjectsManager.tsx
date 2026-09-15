@@ -83,7 +83,13 @@ export default function ProjectsManager() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!formData.title || !formData.description || !formData.thumbnail) return
+
+    console.log('Form submitted with data:', formData)
+
+    if (!formData.title || !formData.description || !formData.thumbnail) {
+      alert('제목, 설명, 썸네일은 필수 항목입니다.')
+      return
+    }
 
     const payload = {
       title: formData.title,
@@ -96,6 +102,8 @@ export default function ProjectsManager() {
       tags: formData.tags ? formData.tags.split(',').map(t => t.trim()).filter(Boolean) : [],
     }
 
+    console.log('Payload to send:', payload)
+
     setSubmitting(true)
     try {
       if (editingProject) {
@@ -104,25 +112,44 @@ export default function ProjectsManager() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         })
-        if (!response.ok) throw new Error('Failed to update project')
+
+        console.log('Update response status:', response.status)
+
+        if (!response.ok) {
+          const errorData = await response.json()
+          console.error('Update error:', errorData)
+          throw new Error(errorData.error || 'Failed to update project')
+        }
+
         const updated = await response.json()
         setProjects(projects.map(p => p.id === updated.id ? updated : p))
+        alert('프로젝트가 수정되었습니다.')
       } else {
         const response = await fetch('/api/projects', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         })
-        if (!response.ok) throw new Error('Failed to create project')
+
+        console.log('Create response status:', response.status)
+
+        if (!response.ok) {
+          const errorData = await response.json()
+          console.error('Create error:', errorData)
+          throw new Error(errorData.error || 'Failed to create project')
+        }
+
         const created = await response.json()
+        console.log('Created project:', created)
         setProjects([created, ...projects])
+        alert('프로젝트가 생성되었습니다.')
       }
       setIsCreating(false)
       setFormData({ title: '', description: '', content: '', thumbnail: '', images: '', link: '', category: '', tags: '' })
       setEditingProject(null)
     } catch (error) {
       console.error('Error saving project:', error)
-      alert('프로젝트 저장에 실패했습니다.')
+      alert(`프로젝트 저장에 실패했습니다: ${error instanceof Error ? error.message : '알 수 없는 오류'}`)
     } finally {
       setSubmitting(false)
     }
