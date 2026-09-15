@@ -63,6 +63,7 @@ export default function ProjectsManager() {
       link: '',
       category: '',
       tags: '',
+      bgmUrl: '',
     })
     setEditingProject(null)
     setIsCreating(true)
