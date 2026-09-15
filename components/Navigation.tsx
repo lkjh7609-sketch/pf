@@ -83,7 +83,7 @@ export default function Navigation() {
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 py-4 flex justify-end items-center">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-5 md:py-4 flex justify-end items-center">
 
         {/* 데스크톱 메뉴 */}
         <div className="hidden md:flex gap-8 items-center" role="menubar">
@@ -116,27 +116,27 @@ export default function Navigation() {
           </button>
         </div>
 
-        {/* 모바일 햄버거 버튼 */}
+        {/* 모바일 햄버거 버튼 - 터치 영역 증가 */}
         <button
-          className="md:hidden flex flex-col gap-1.5 p-2"
+          className="md:hidden flex flex-col gap-2 p-3 -mr-3"
           onClick={() => setIsMobileOpen(!isMobileOpen)}
           aria-expanded={isMobileOpen}
           aria-controls="mobile-menu"
           aria-label={isMobileOpen ? '메뉴 닫기' : '메뉴 열기'}
         >
           <span
-            className={`block w-5 h-0.5 bg-black transition-all duration-300 ${
-              isMobileOpen ? 'rotate-45 translate-y-2' : ''
+            className={`block w-7 h-0.5 bg-black transition-all duration-300 ${
+              isMobileOpen ? 'rotate-45 translate-y-2.5' : ''
             }`}
           />
           <span
-            className={`block w-5 h-0.5 bg-black transition-all duration-300 ${
+            className={`block w-7 h-0.5 bg-black transition-all duration-300 ${
               isMobileOpen ? 'opacity-0' : ''
             }`}
           />
           <span
-            className={`block w-5 h-0.5 bg-black transition-all duration-300 ${
-              isMobileOpen ? '-rotate-45 -translate-y-2' : ''
+            className={`block w-7 h-0.5 bg-black transition-all duration-300 ${
+              isMobileOpen ? '-rotate-45 -translate-y-2.5' : ''
             }`}
           />
         </button>
@@ -154,7 +154,7 @@ export default function Navigation() {
             transition={{ duration: 0.3 }}
             className="md:hidden overflow-hidden border-t border-gray-100"
           >
-            <div className="px-6 py-4 space-y-1 bg-white/95 backdrop-blur-md">
+            <div className="px-6 py-6 space-y-2 bg-white/95 backdrop-blur-md">
               {NAV_ITEMS.map((item) => (
                 <a
                   key={item.id}
@@ -168,17 +168,17 @@ export default function Navigation() {
                           handleNavClick(item)
                         }
                   }
-                  className="block py-3 text-sm hover:text-beige-dark transition-colors"
+                  className="block py-4 text-base font-light hover:text-beige-dark transition-colors border-b border-gray-100 last:border-0"
                 >
                   {item.name}
                 </a>
               ))}
 
               {/* 모바일 토글 버튼 */}
-              <div className="pt-4 border-t border-gray-200">
+              <div className="pt-4">
                 <button
                   onClick={() => setLocale(locale === 'ko' ? 'en' : 'ko')}
-                  className="w-full px-3 py-2 rounded-md bg-beige-dark/10 hover:bg-beige-dark/20 transition-all text-xs font-medium"
+                  className="w-full px-4 py-3 rounded-md bg-beige-dark/10 hover:bg-beige-dark/20 transition-all text-sm font-medium"
                   aria-label="Toggle language"
                 >
                   {locale === 'ko' ? 'EN' : 'KO'}

@@ -82,13 +82,13 @@ export default function ImageGallery({ items, type = 'projects' }: ImageGalleryP
                   </div>
 
                   {/* Info */}
-                  <h3 className="font-semibold text-lg mb-2 group-hover:text-beige-dark transition-colors">
+                  <h3 className="font-semibold text-lg md:text-lg mb-2 group-hover:text-beige-dark transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-gray-600 text-sm line-clamp-2">{item.description}</p>
+                  <p className="text-gray-600 text-base md:text-sm line-clamp-2">{item.description}</p>
 
                   {item.link && (
-                    <div className="mt-2 text-xs text-blue-600">
+                    <div className="mt-2 text-sm md:text-xs text-blue-600">
                       External Link ↗
                     </div>
                   )}
