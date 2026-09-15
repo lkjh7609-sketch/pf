@@ -8,6 +8,7 @@ interface Project {
   id: string
   title: string
   description: string
+  content: string | null
   thumbnail: string
   images: string[]
   link?: string
@@ -22,6 +23,7 @@ export default function ProjectsManager() {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
+    content: '',
     thumbnail: '',
     images: '',
     link: '',
@@ -49,6 +51,7 @@ export default function ProjectsManager() {
     setFormData({
       title: '',
       description: '',
+      content: '',
       thumbnail: '',
       images: '',
       link: '',
@@ -61,6 +64,7 @@ export default function ProjectsManager() {
     setFormData({
       title: project.title,
       description: project.description,
+      content: project.content || '',
       thumbnail: project.thumbnail,
       images: project.images.join('\n'),
       link: project.link || '',
@@ -76,6 +80,7 @@ export default function ProjectsManager() {
     const payload = {
       title: formData.title,
       description: formData.description,
+      content: formData.content || null,
       thumbnail: formData.thumbnail,
       images: formData.images.split('\n').filter(img => img.trim()),
       link: formData.link || undefined,
@@ -103,7 +108,7 @@ export default function ProjectsManager() {
         setProjects([created, ...projects])
       }
       setIsCreating(false)
-      setFormData({ title: '', description: '', thumbnail: '', images: '', link: '' })
+      setFormData({ title: '', description: '', content: '', thumbnail: '', images: '', link: '' })
       setEditingProject(null)
     } catch (error) {
       console.error('Error saving project:', error)
@@ -131,7 +136,7 @@ export default function ProjectsManager() {
   const handleCancel = () => {
     setIsCreating(false)
     setEditingProject(null)
-    setFormData({ title: '', description: '', thumbnail: '', images: '', link: '' })
+    setFormData({ title: '', description: '', content: '', thumbnail: '', images: '', link: '' })
   }
 
   if (loading) {
@@ -166,6 +171,20 @@ export default function ProjectsManager() {
               required
               disabled={submitting}
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Content (Markdown)</label>
+            <textarea
+              value={formData.content}
+              onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+              rows={12}
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black font-mono text-sm"
+              placeholder="Write markdown content here...&#10;&#10;# Heading&#10;## Subheading&#10;&#10;```javascript&#10;const code = 'example';&#10;```"
+              disabled={submitting}
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Supports markdown with code highlighting (ABAP, SQL, TypeScript, Java, etc.)
+            </p>
           </div>
           <div>
             <ImageUpload

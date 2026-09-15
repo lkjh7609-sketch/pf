@@ -15,6 +15,7 @@ model Project {
   id          String   @id @default(cuid())
   title       String
   description String
+  content     String?  @db.Text // Markdown content for detail page
   thumbnail   String
   images      String[] // Array of image URLs
   link        String?
@@ -28,6 +29,7 @@ model Writing {
   id          String   @id @default(cuid())
   title       String
   description String
+  content     String?  @db.Text // Markdown content for detail page
   thumbnail   String
   images      String[] // Array of image URLs
   link        String?

@@ -83,7 +83,7 @@ export default function Writings() {
         </AnimatedSection>
 
         {writings.length > 0 ? (
-          <ImageGallery items={writings} />
+          <ImageGallery items={writings} type="writings" />
         ) : (
           <div className="text-center py-20 text-gray-400 font-light">
             <p className="text-4xl mb-4">✍️</p>

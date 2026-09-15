@@ -8,11 +8,15 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     // 외부 이미지 도메인 (필요 시 추가)
     remotePatterns: [
-      // 예시: Cloudinary 등 외부 이미지 CDN 사용 시
-      // {
-      //   protocol: 'https',
-      //   hostname: 'res.cloudinary.com',
-      // },
+      // Supabase Storage
+      {
+        protocol: 'https',
+        hostname: 'bjxatvkmajmicdamrjam.supabase.co',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.supabase.co',
+      },
     ],
   },
 }

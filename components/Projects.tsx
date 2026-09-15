@@ -83,7 +83,7 @@ export default function Projects() {
         </AnimatedSection>
 
         {projects.length > 0 ? (
-          <ImageGallery items={projects} />
+          <ImageGallery items={projects} type="projects" />
         ) : (
           <div className="text-center py-20 text-gray-400 font-light">
             <p className="text-4xl mb-4">🚀</p>

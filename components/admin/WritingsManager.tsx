@@ -8,6 +8,7 @@ interface Writing {
   id: string
   title: string
   description: string
+  content: string | null
   thumbnail: string
   images: string[]
   link?: string
@@ -22,6 +23,7 @@ export default function WritingsManager() {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
+    content: '',
     thumbnail: '',
     images: '',
     link: '',
@@ -49,6 +51,7 @@ export default function WritingsManager() {
     setFormData({
       title: '',
       description: '',
+      content: '',
       thumbnail: '',
       images: '',
       link: '',
@@ -61,6 +64,7 @@ export default function WritingsManager() {
     setFormData({
       title: writing.title,
       description: writing.description,
+      content: writing.content || '',
       thumbnail: writing.thumbnail,
       images: writing.images.join('\n'),
       link: writing.link || '',
@@ -76,6 +80,7 @@ export default function WritingsManager() {
     const payload = {
       title: formData.title,
       description: formData.description,
+      content: formData.content || null,
       thumbnail: formData.thumbnail,
       images: formData.images.split('\n').filter(img => img.trim()),
       link: formData.link || undefined,
@@ -103,7 +108,7 @@ export default function WritingsManager() {
         setWritings([created, ...writings])
       }
       setIsCreating(false)
-      setFormData({ title: '', description: '', thumbnail: '', images: '', link: '' })
+      setFormData({ title: '', description: '', content: '', thumbnail: '', images: '', link: '' })
       setEditingWriting(null)
     } catch (error) {
       console.error('Error saving writing:', error)
@@ -131,7 +136,7 @@ export default function WritingsManager() {
   const handleCancel = () => {
     setIsCreating(false)
     setEditingWriting(null)
-    setFormData({ title: '', description: '', thumbnail: '', images: '', link: '' })
+    setFormData({ title: '', description: '', content: '', thumbnail: '', images: '', link: '' })
   }
 
   if (loading) {
@@ -166,6 +171,20 @@ export default function WritingsManager() {
               required
               disabled={submitting}
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Content (Markdown)</label>
+            <textarea
+              value={formData.content}
+              onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+              rows={12}
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black font-mono text-sm"
+              placeholder="Write markdown content here...&#10;&#10;# Heading&#10;## Subheading&#10;&#10;```javascript&#10;const code = 'example';&#10;```"
+              disabled={submitting}
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Supports markdown with code highlighting (ABAP, SQL, TypeScript, Java, etc.)
+            </p>
           </div>
           <div>
             <ImageUpload

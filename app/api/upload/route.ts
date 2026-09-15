@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     if (error) {
       console.error('Supabase upload error:', error)
       return NextResponse.json(
-        { error: 'Failed to upload file' },
+        { error: 'Failed to upload file', details: error.message },
         { status: 500 }
       )
     }
@@ -50,7 +50,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Upload error:', error)
     return NextResponse.json(
-      { error: 'Failed to upload file' },
+      { error: 'Failed to upload file', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     )
   }
