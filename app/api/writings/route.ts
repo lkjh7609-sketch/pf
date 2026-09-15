@@ -23,6 +23,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json()
+    console.log('Received body:', body)
     const { title, description, content, thumbnail, images, link, category, tags } = body
 
     const writing = await prisma.writing.create({
@@ -32,8 +33,8 @@ export async function POST(request: Request) {
         content,
         thumbnail,
         images: images || [],
-        link,
-        category,
+        link: link || null,
+        category: category || null,
         tags: tags || [],
       },
     })
@@ -42,7 +43,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Failed to create writing:', error)
     return NextResponse.json(
-      { error: 'Failed to create writing' },
+      { error: 'Failed to create writing', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     )
   }

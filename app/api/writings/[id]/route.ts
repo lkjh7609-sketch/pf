@@ -43,8 +43,8 @@ export async function PUT(
         content,
         thumbnail,
         images: images || [],
-        link,
-        category,
+        link: link || null,
+        category: category || null,
         tags: tags || [],
       },
     })
@@ -53,7 +53,7 @@ export async function PUT(
   } catch (error) {
     console.error('Failed to update writing:', error)
     return NextResponse.json(
-      { error: 'Failed to update writing' },
+      { error: 'Failed to update writing', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     )
   }
