@@ -17,9 +17,6 @@ export default function BoardPage() {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedPost, setSelectedPost] = useState<Post | null>(null)
-  const [isWriting, setIsWriting] = useState(false)
-  const [newPost, setNewPost] = useState({ title: '', content: '' })
-  const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
     fetchPosts()
@@ -44,38 +41,6 @@ export default function BoardPage() {
 
   const handleBack = () => {
     setSelectedPost(null)
-    setIsWriting(false)
-  }
-
-  const handleNewPost = async () => {
-    if (!newPost.title || !newPost.content) return
-
-    setSubmitting(true)
-    try {
-      const response = await fetch('/api/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title: newPost.title,
-          author: 'Ben Lee',
-          content: newPost.content,
-        }),
-      })
-
-      if (!response.ok) throw new Error('Failed to create post')
-
-      const createdPost = await response.json()
-      setPosts([createdPost, ...posts])
-      setNewPost({ title: '', content: '' })
-      setIsWriting(false)
-    } catch (error) {
-      console.error('Error creating post:', error)
-      alert('게시글 작성에 실패했습니다.')
-    } finally {
-      setSubmitting(false)
-    }
   }
 
   const formatDate = (dateString: string) => {
@@ -118,22 +83,15 @@ export default function BoardPage() {
 
       <div className="max-w-4xl mx-auto px-6 pt-24 pb-12">
         {/* Post List */}
-        {!selectedPost && !isWriting && (
+        {!selectedPost && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
           >
-            <div className="flex justify-between items-center mb-8">
+            <div className="mb-8">
               <h1 className="text-4xl font-bold">Board</h1>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setIsWriting(true)}
-                className="px-6 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors"
-              >
-                글쓰기
-              </motion.button>
+              <p className="text-sm text-gray-500 mt-2">공지사항 및 소식을 확인하세요</p>
             </div>
 
             {loading ? (
@@ -213,75 +171,6 @@ export default function BoardPage() {
                   </div>
                 </div>
               )}
-            </div>
-          </motion.div>
-        )}
-
-        {/* Write Post */}
-        {isWriting && (
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-          >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleBack}
-              className="mb-6 text-gray-600 hover:text-black transition-colors"
-            >
-              ← 취소
-            </motion.button>
-
-            <div className="bg-beige-light p-8 rounded-lg">
-              <h1 className="text-3xl font-bold mb-6">새 글 작성</h1>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-semibold mb-2">제목</label>
-                  <input
-                    type="text"
-                    value={newPost.title}
-                    onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-beige-dark"
-                    placeholder="제목을 입력하세요"
-                    disabled={submitting}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold mb-2">내용</label>
-                  <textarea
-                    value={newPost.content}
-                    onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
-                    rows={12}
-                    className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-beige-dark resize-none"
-                    placeholder="내용을 입력하세요"
-                    disabled={submitting}
-                  />
-                </div>
-
-                <div className="flex justify-end gap-4 pt-4">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handleBack}
-                    className="px-6 py-2 border border-gray-300 rounded hover:bg-gray-50 transition-colors"
-                    disabled={submitting}
-                  >
-                    취소
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handleNewPost}
-                    className="px-6 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors disabled:opacity-50"
-                    disabled={submitting || !newPost.title || !newPost.content}
-                  >
-                    {submitting ? '작성 중...' : '작성완료'}
-                  </motion.button>
-                </div>
-              </div>
             </div>
           </motion.div>
         )}
