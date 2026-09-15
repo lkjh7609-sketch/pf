@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import ImageUpload from './ImageUpload'
 
 interface Project {
   id: string
@@ -167,25 +168,35 @@ export default function ProjectsManager() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">Thumbnail URL *</label>
+            <ImageUpload
+              label="Thumbnail *"
+              onUpload={(url) => setFormData({ ...formData, thumbnail: url })}
+              buttonText="Upload Thumbnail"
+            />
             <input
               type="text"
               value={formData.thumbnail}
               onChange={(e) => setFormData({ ...formData, thumbnail: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black"
-              placeholder="/images/projects/project-thumb.jpg"
-              required
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black mt-2"
+              placeholder="Or enter URL manually"
               disabled={submitting}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">Images (one per line)</label>
+            <ImageUpload
+              label="Additional Images"
+              onUpload={(url) => setFormData({
+                ...formData,
+                images: formData.images ? `${formData.images}\n${url}` : url
+              })}
+              buttonText="Upload Image"
+            />
             <textarea
               value={formData.images}
               onChange={(e) => setFormData({ ...formData, images: e.target.value })}
               rows={4}
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black"
-              placeholder="/images/projects/project-1.jpg&#10;/images/projects/project-2.jpg"
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black mt-2"
+              placeholder="Or enter URLs manually (one per line)"
               disabled={submitting}
             />
           </div>
