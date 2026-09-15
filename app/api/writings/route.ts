@@ -23,7 +23,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { title, description, content, thumbnail, images, link } = body
+    const { title, description, content, thumbnail, images, link, category, tags } = body
 
     const writing = await prisma.writing.create({
       data: {
@@ -33,6 +33,8 @@ export async function POST(request: Request) {
         thumbnail,
         images: images || [],
         link,
+        category,
+        tags: tags || [],
       },
     })
 

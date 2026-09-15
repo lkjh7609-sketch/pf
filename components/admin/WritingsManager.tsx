@@ -12,6 +12,8 @@ interface Writing {
   thumbnail: string
   images: string[]
   link?: string
+  category?: string
+  tags?: string[]
   createdAt: string
 }
 
@@ -27,6 +29,8 @@ export default function WritingsManager() {
     thumbnail: '',
     images: '',
     link: '',
+    category: '',
+    tags: '',
   })
   const [submitting, setSubmitting] = useState(false)
 
@@ -55,6 +59,8 @@ export default function WritingsManager() {
       thumbnail: '',
       images: '',
       link: '',
+      category: '',
+      tags: '',
     })
     setEditingWriting(null)
     setIsCreating(true)
@@ -68,6 +74,8 @@ export default function WritingsManager() {
       thumbnail: writing.thumbnail,
       images: writing.images.join('\n'),
       link: writing.link || '',
+      category: writing.category || '',
+      tags: (writing.tags || []).join(', '),
     })
     setEditingWriting(writing)
     setIsCreating(true)
@@ -84,6 +92,8 @@ export default function WritingsManager() {
       thumbnail: formData.thumbnail,
       images: formData.images.split('\n').filter(img => img.trim()),
       link: formData.link || undefined,
+      category: formData.category || null,
+      tags: formData.tags ? formData.tags.split(',').map(t => t.trim()).filter(Boolean) : [],
     }
 
     setSubmitting(true)
@@ -108,7 +118,7 @@ export default function WritingsManager() {
         setWritings([created, ...writings])
       }
       setIsCreating(false)
-      setFormData({ title: '', description: '', content: '', thumbnail: '', images: '', link: '' })
+      setFormData({ title: '', description: '', content: '', thumbnail: '', images: '', link: '', category: '', tags: '' })
       setEditingWriting(null)
     } catch (error) {
       console.error('Error saving writing:', error)
@@ -136,7 +146,7 @@ export default function WritingsManager() {
   const handleCancel = () => {
     setIsCreating(false)
     setEditingWriting(null)
-    setFormData({ title: '', description: '', content: '', thumbnail: '', images: '', link: '' })
+    setFormData({ title: '', description: '', content: '', thumbnail: '', images: '', link: '', category: '', tags: '' })
   }
 
   if (loading) {
@@ -229,6 +239,31 @@ export default function WritingsManager() {
               placeholder="https://example.com"
               disabled={submitting}
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Category (optional)</label>
+            <input
+              type="text"
+              value={formData.category}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black"
+              placeholder="Tech, Daily, Backend, etc."
+              disabled={submitting}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Tags (optional)</label>
+            <input
+              type="text"
+              value={formData.tags}
+              onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black"
+              placeholder="ABAP, Node.js, Thoughts (comma separated)"
+              disabled={submitting}
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Separate multiple tags with commas
+            </p>
           </div>
           <div className="flex gap-4">
             <button

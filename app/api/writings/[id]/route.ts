@@ -33,7 +33,7 @@ export async function PUT(
 ) {
   try {
     const body = await request.json()
-    const { title, description, content, thumbnail, images, link } = body
+    const { title, description, content, thumbnail, images, link, category, tags } = body
 
     const writing = await prisma.writing.update({
       where: { id: params.id },
@@ -44,6 +44,8 @@ export async function PUT(
         thumbnail,
         images: images || [],
         link,
+        category,
+        tags: tags || [],
       },
     })
 
