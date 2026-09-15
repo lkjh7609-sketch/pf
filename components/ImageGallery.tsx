@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 interface GalleryItem {
@@ -18,16 +18,33 @@ interface ImageGalleryProps {
   type?: 'projects' | 'writings'
 }
 
-const ITEMS_PER_PAGE = 6
+const MOBILE_ITEMS = 3
+const DESKTOP_ITEMS = 6
+const MOBILE_BREAKPOINT = 768
 
 export default function ImageGallery({ items, type = 'projects' }: ImageGalleryProps) {
   const [thumbnailErrors, setThumbnailErrors] = useState<Set<string>>(new Set())
   const [currentPage, setCurrentPage] = useState(0)
+  const [itemsPerPage, setItemsPerPage] = useState(DESKTOP_ITEMS)
 
-  const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE)
-  const startIndex = currentPage * ITEMS_PER_PAGE
-  const endIndex = startIndex + ITEMS_PER_PAGE
+  useEffect(() => {
+    const updateItemsPerPage = () => {
+      setItemsPerPage(window.innerWidth < MOBILE_BREAKPOINT ? MOBILE_ITEMS : DESKTOP_ITEMS)
+    }
+    updateItemsPerPage()
+    window.addEventListener('resize', updateItemsPerPage)
+    return () => window.removeEventListener('resize', updateItemsPerPage)
+  }, [])
+
+  // 페이지 수가 줄어들 때 현재 페이지가 범위를 넘지 않도록
+  const totalPages = Math.ceil(items.length / itemsPerPage)
+  const safePage = Math.min(currentPage, Math.max(totalPages - 1, 0))
+  if (safePage !== currentPage) setCurrentPage(safePage)
+
+  const startIndex = safePage * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
   const currentItems = items.slice(startIndex, endIndex)
+
 
   const handleThumbnailError = (itemId: string) => {
     setThumbnailErrors((prev) => new Set(prev).add(itemId))

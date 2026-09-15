@@ -86,14 +86,6 @@ export default function Navigation() {
       >
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-5 md:py-4 flex justify-between items-center">
 
-          {/* 모바일 브랜딩 로고 - 좌측 */}
-          <button
-            onClick={() => scrollToSection('hero')}
-            className="md:hidden text-lg font-semibold text-black hover:text-beige-dark transition-colors"
-            aria-label="홈으로 이동"
-          >
-            Ben Lee
-          </button>
 
           {/* 데스크톱 메뉴 */}
           <div className="hidden md:flex gap-8 items-center ml-auto" role="menubar">
