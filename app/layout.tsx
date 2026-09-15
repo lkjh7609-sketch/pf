@@ -106,7 +106,7 @@ const jsonLd = {
   jobTitle: 'Back-end & ABAP Developer',
   description:
     '안녕하세요. 이재헌입니다. Back-end 및 ABAP 개발자로서 다양한 프로젝트와 생각을 공유합니다.',
-  email: 'javerdose@gmail.com',
+  email: 'javerdose@yahoo.com',
   sameAs: [],
 }
 

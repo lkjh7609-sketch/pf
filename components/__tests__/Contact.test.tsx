@@ -27,8 +27,8 @@ describe('Contact Component', () => {
       </LanguageProvider>
     )
 
-    const emailLink = screen.getByRole('link', { name: /javerdose@gmail.com/i })
-    expect(emailLink).toHaveAttribute('href', 'mailto:javerdose@gmail.com')
+    const emailLink = screen.getByRole('link', { name: /javerdose@yahoo.com/i })
+    expect(emailLink).toHaveAttribute('href', 'mailto:javerdose@yahoo.com')
   })
 
   it('displays copyright information', () => {
