@@ -9,7 +9,15 @@ export async function GET() {
         createdAt: 'desc',
       },
     })
-    return NextResponse.json(entries)
+
+    // 캐시 방지
+    return NextResponse.json(entries, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      },
+    })
   } catch (error) {
     console.error('Failed to fetch all guestbook entries:', error)
     return NextResponse.json(

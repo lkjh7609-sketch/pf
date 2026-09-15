@@ -23,7 +23,13 @@ export default function GuestbookManager() {
 
   async function fetchEntries() {
     try {
-      const response = await fetch('/api/guestbook/admin')
+      // 캐시 방지
+      const response = await fetch('/api/guestbook/admin', {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+      })
       if (!response.ok) throw new Error('Failed to fetch entries')
       const data = await response.json()
       setEntries(data)
@@ -42,12 +48,18 @@ export default function GuestbookManager() {
         body: JSON.stringify({ approved }),
       })
 
-      if (!response.ok) throw new Error('Failed to update')
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.error('Update error:', errorData)
+        throw new Error(errorData.details || 'Failed to update')
+      }
 
-      setEntries(entries.map(e => e.id === id ? { ...e, approved } : e))
+      // 서버에서 다시 데이터 가져오기
+      await fetchEntries()
+      alert(approved ? '승인되었습니다.' : '승인이 취소되었습니다.')
     } catch (error) {
       console.error('Error updating entry:', error)
-      alert('업데이트에 실패했습니다.')
+      alert(`업데이트에 실패했습니다: ${error instanceof Error ? error.message : '알 수 없는 오류'}`)
     }
   }
 
@@ -59,12 +71,18 @@ export default function GuestbookManager() {
         method: 'DELETE',
       })
 
-      if (!response.ok) throw new Error('Failed to delete')
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.error('Delete error:', errorData)
+        throw new Error(errorData.details || 'Failed to delete')
+      }
 
-      setEntries(entries.filter(e => e.id !== id))
+      // 서버에서 다시 데이터 가져오기
+      await fetchEntries()
+      alert('삭제되었습니다.')
     } catch (error) {
       console.error('Error deleting entry:', error)
-      alert('삭제에 실패했습니다.')
+      alert(`삭제에 실패했습니다: ${error instanceof Error ? error.message : '알 수 없는 오류'}`)
     }
   }
 
