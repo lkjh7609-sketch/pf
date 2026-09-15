@@ -32,6 +32,18 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // 모바일 메뉴 열림/닫힘 시 body 스크롤 제어
+  useEffect(() => {
+    if (isMobileOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMobileOpen])
+
   // 모바일 메뉴 열릴 때 스크롤 잠금
   useEffect(() => {
     if (isMobileOpen) {

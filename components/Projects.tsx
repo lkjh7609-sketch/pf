@@ -116,15 +116,15 @@ export default function Projects() {
         </AnimatedSection>
 
         {loading ? (
-          <div className="text-center py-12 md:py-20 text-gray-400">
-            <p className="text-3xl md:text-4xl mb-4">⏳</p>
+          <div className="text-center py-16 md:py-20 text-gray-400">
+            <div className="w-8 h-8 border-3 border-gray-200 border-t-black rounded-full animate-spin mx-auto mb-4"></div>
             <p className="text-sm md:text-base">Loading projects...</p>
           </div>
         ) : filteredProjects.length > 0 ? (
           <ImageGallery items={filteredProjects} type="projects" />
         ) : (
-          <div className="text-center py-12 md:py-20 text-gray-400">
-            <p className="text-3xl md:text-4xl mb-4">📁</p>
+          <div className="text-center py-16 md:py-20 text-gray-400">
+            <p className="text-4xl md:text-4xl mb-4">📁</p>
             <p className="text-sm md:text-base">{messages.projects.empty}</p>
           </div>
         )}
