@@ -37,16 +37,23 @@ export async function PUT(
     const body = await request.json()
     const { approved } = body
 
+    console.log('PUT /api/guestbook/[id] - ID:', params.id, 'Body:', body)
+
     const entry = await prisma.guestbook.update({
       where: { id: params.id },
       data: { approved },
     })
 
+    console.log('Update successful:', entry)
     return NextResponse.json(entry)
   } catch (error) {
     console.error('Failed to update entry:', error)
     return NextResponse.json(
-      { error: 'Failed to update entry' },
+      {
+        error: 'Failed to update entry',
+        details: error instanceof Error ? error.message : 'Unknown error',
+        id: params.id
+      },
       { status: 500 }
     )
   }
@@ -58,15 +65,22 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
+    console.log('DELETE /api/guestbook/[id] - ID:', params.id)
+
     await prisma.guestbook.delete({
       where: { id: params.id },
     })
 
+    console.log('Delete successful')
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Failed to delete entry:', error)
     return NextResponse.json(
-      { error: 'Failed to delete entry' },
+      {
+        error: 'Failed to delete entry',
+        details: error instanceof Error ? error.message : 'Unknown error',
+        id: params.id
+      },
       { status: 500 }
     )
   }
