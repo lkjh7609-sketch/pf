@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 // GET: 승인된 공개 방명록만 조회 (일반 사용자용)
 export async function GET() {
   try {
@@ -13,7 +16,11 @@ export async function GET() {
         createdAt: 'desc',
       },
     })
-    return NextResponse.json(entries)
+    return NextResponse.json(entries, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+      },
+    })
   } catch (error) {
     console.error('Failed to fetch guestbook entries:', error)
     return NextResponse.json(
