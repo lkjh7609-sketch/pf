@@ -12,10 +12,13 @@ interface GuestbookEntry {
   createdAt: string
 }
 
+const ITEMS_PER_PAGE = 10
+
 export default function GuestbookManager() {
   const [entries, setEntries] = useState<GuestbookEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState<'all' | 'pending' | 'approved'>('pending')
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     fetchEntries()
@@ -92,6 +95,45 @@ export default function GuestbookManager() {
     return true
   })
 
+  // Pagination
+  const totalPages = Math.ceil(filteredEntries.length / ITEMS_PER_PAGE)
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
+  const endIndex = startIndex + ITEMS_PER_PAGE
+  const currentEntries = filteredEntries.slice(startIndex, endIndex)
+
+  const goToPage = (page: number) => {
+    setCurrentPage(page)
+  }
+
+  const renderPageNumbers = () => {
+    const pages = []
+    const maxVisiblePages = 5
+
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i)
+      }
+    } else {
+      if (currentPage <= 3) {
+        for (let i = 1; i <= 4; i++) pages.push(i)
+        pages.push('...')
+        pages.push(totalPages)
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1)
+        pages.push('...')
+        for (let i = totalPages - 3; i <= totalPages; i++) pages.push(i)
+      } else {
+        pages.push(1)
+        pages.push('...')
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) pages.push(i)
+        pages.push('...')
+        pages.push(totalPages)
+      }
+    }
+
+    return pages
+  }
+
   if (loading) {
     return <div className="text-center py-12 text-gray-500">Loading...</div>
   }
@@ -102,7 +144,10 @@ export default function GuestbookManager() {
         <h2 className="text-lg md:text-xl font-semibold">Manage Guestbook</h2>
         <div className="flex flex-wrap gap-2">
           <button
-            onClick={() => setFilter('all')}
+            onClick={() => {
+              setFilter('all')
+              setCurrentPage(1)
+            }}
             className={`px-3 py-1.5 text-xs md:text-sm rounded ${
               filter === 'all' ? 'bg-black text-white' : 'bg-gray-200'
             }`}
@@ -110,7 +155,10 @@ export default function GuestbookManager() {
             All ({entries.length})
           </button>
           <button
-            onClick={() => setFilter('pending')}
+            onClick={() => {
+              setFilter('pending')
+              setCurrentPage(1)
+            }}
             className={`px-3 py-1.5 text-xs md:text-sm rounded ${
               filter === 'pending' ? 'bg-black text-white' : 'bg-gray-200'
             }`}
@@ -118,7 +166,10 @@ export default function GuestbookManager() {
             Pending ({entries.filter(e => !e.approved).length})
           </button>
           <button
-            onClick={() => setFilter('approved')}
+            onClick={() => {
+              setFilter('approved')
+              setCurrentPage(1)
+            }}
             className={`px-3 py-1.5 text-xs md:text-sm rounded ${
               filter === 'approved' ? 'bg-black text-white' : 'bg-gray-200'
             }`}
@@ -133,8 +184,9 @@ export default function GuestbookManager() {
           No entries to display.
         </div>
       ) : (
-        <div className="space-y-4">
-          {filteredEntries.map((entry) => (
+        <>
+          <div className="space-y-4">
+            {currentEntries.map((entry) => (
             <motion.div
               key={entry.id}
               initial={{ opacity: 0 }}
@@ -201,7 +253,54 @@ export default function GuestbookManager() {
             </motion.div>
           ))}
         </div>
-      )}
+
+        {/* Numbered Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-2 mt-8">
+            <button
+              onClick={() => goToPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`px-3 py-1 rounded ${
+                currentPage === 1
+                  ? 'text-gray-300 cursor-not-allowed'
+                  : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              ‹
+            </button>
+
+            {renderPageNumbers().map((page, index) => (
+              <button
+                key={index}
+                onClick={() => typeof page === 'number' && goToPage(page)}
+                disabled={page === '...'}
+                className={`px-3 py-1 rounded text-sm ${
+                  page === currentPage
+                    ? 'bg-black text-white'
+                    : page === '...'
+                    ? 'cursor-default'
+                    : 'text-gray-700 hover:bg-gray-100'
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+
+            <button
+              onClick={() => goToPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={`px-3 py-1 rounded ${
+                currentPage === totalPages
+                  ? 'text-gray-300 cursor-not-allowed'
+                  : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              ›
+            </button>
+          </div>
+        )}
+      </>
+    )}
     </div>
   )
 }
