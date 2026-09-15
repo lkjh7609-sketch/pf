@@ -34,11 +34,11 @@ export default function ProjectDetailClient({ project, recentProjects }: Project
         animate={{ y: 0 }}
         className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm"
       >
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <Link href="/">
             <motion.span
               whileHover={{ scale: 1.05 }}
-              className="text-lg font-semibold cursor-pointer"
+              className="text-xl font-bold hover:opacity-70 transition-opacity cursor-pointer"
             >
               Ben Lee
             </motion.span>
@@ -46,7 +46,7 @@ export default function ProjectDetailClient({ project, recentProjects }: Project
           <Link href="/#projects">
             <motion.span
               whileHover={{ scale: 1.05 }}
-              className="text-sm font-medium hover:text-beige-dark transition-colors cursor-pointer"
+              className="text-sm hover:text-beige-dark transition-colors cursor-pointer"
             >
               ← Back to Projects
             </motion.span>
@@ -54,7 +54,7 @@ export default function ProjectDetailClient({ project, recentProjects }: Project
         </div>
       </motion.nav>
 
-      <div className="max-w-7xl mx-auto px-6 pt-24 pb-12">
+      <div className="max-w-6xl mx-auto px-6 pt-24 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-3">
@@ -65,9 +65,9 @@ export default function ProjectDetailClient({ project, recentProjects }: Project
             >
               {/* Header */}
               <div className="mb-8">
-                <h1 className="text-4xl font-bold mb-4">{project.title}</h1>
-                <p className="text-gray-600 mb-4">{project.description}</p>
-                <div className="flex items-center gap-4 text-sm text-gray-500">
+                <h1 className="text-2xl md:text-3xl font-light text-black mb-3">{project.title}</h1>
+                <p className="text-sm text-gray-500 font-light mb-4">{project.description}</p>
+                <div className="flex items-center gap-4 text-xs text-gray-400 font-light">
                   <span>{new Date(project.createdAt).toLocaleDateString('ko-KR')}</span>
                   {project.link && (
                     <>
@@ -76,7 +76,7 @@ export default function ProjectDetailClient({ project, recentProjects }: Project
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline"
+                        className="text-black hover:text-beige-dark transition-colors"
                       >
                         Project Link ↗
                       </a>
@@ -97,7 +97,7 @@ export default function ProjectDetailClient({ project, recentProjects }: Project
               )}
 
               {/* Markdown Content */}
-              <div className="prose prose-lg max-w-none">
+              <div className="prose prose-sm max-w-none prose-headings:font-light prose-headings:text-black prose-p:text-gray-600 prose-p:font-light">
                 {project.content ? (
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
@@ -127,14 +127,15 @@ export default function ProjectDetailClient({ project, recentProjects }: Project
                     {project.content}
                   </ReactMarkdown>
                 ) : (
-                  <p className="text-gray-500">No content available.</p>
+                  <p className="text-sm text-gray-400 font-light">No content available.</p>
                 )}
               </div>
 
               {/* Images Gallery */}
               {project.images && project.images.length > 0 && (
-                <div className="mt-12">
-                  <h3 className="text-2xl font-semibold mb-6">Images</h3>
+                <div className="mt-10">
+                  <h3 className="text-lg font-light text-black mb-4">Images</h3>
+                  <div className="w-12 h-px bg-gray-300 mb-6"></div>
                   <div className="grid grid-cols-2 gap-4">
                     {project.images.map((image, idx) => (
                       <img
@@ -156,9 +157,9 @@ export default function ProjectDetailClient({ project, recentProjects }: Project
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="bg-beige-light p-6 rounded-lg"
+                className="bg-beige-light p-5 rounded-lg"
               >
-                <h3 className="text-lg font-semibold mb-4">Recent Projects</h3>
+                <h3 className="text-sm font-medium mb-4">Recent Projects</h3>
                 <div className="space-y-4 max-h-[70vh] overflow-y-auto">
                   {recentProjects.map((item) => (
                     <Link key={item.id} href={`/projects/${item.id}`}>
@@ -170,10 +171,10 @@ export default function ProjectDetailClient({ project, recentProjects }: Project
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                         </div>
-                        <h4 className="font-medium text-sm line-clamp-2 group-hover:text-beige-dark transition-colors">
+                        <h4 className="font-light text-sm line-clamp-2 group-hover:text-beige-dark transition-colors">
                           {item.title}
                         </h4>
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-gray-400 font-light mt-1">
                           {new Date(item.createdAt).toLocaleDateString('ko-KR')}
                         </p>
                       </div>

@@ -59,24 +59,29 @@ export default function BoardPage() {
         animate={{ y: 0 }}
         className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm"
       >
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-end items-center">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+          <Link href="/">
+            <motion.span
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="text-xl font-bold hover:opacity-70 transition-opacity cursor-pointer"
+            >
+              Ben Lee
+            </motion.span>
+          </Link>
           <div className="flex gap-8 items-center">
             <Link href="/">
               <motion.span
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="text-sm font-medium hover:text-beige-dark transition-colors cursor-pointer"
+                className="text-sm hover:text-beige-dark transition-colors cursor-pointer"
               >
                 Home
               </motion.span>
             </Link>
-            <motion.span
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="text-sm font-medium cursor-pointer"
-            >
+            <span className="text-sm text-beige-dark cursor-default">
               Board
-            </motion.span>
+            </span>
           </div>
         </div>
       </motion.nav>
@@ -90,22 +95,23 @@ export default function BoardPage() {
             exit={{ opacity: 0, y: -20 }}
           >
             <div className="mb-8">
-              <h1 className="text-4xl font-bold">Board</h1>
-              <p className="text-sm text-gray-500 mt-2">공지사항 및 소식을 확인하세요</p>
+              <h1 className="text-2xl md:text-3xl font-light text-black">Board</h1>
+              <div className="w-12 h-px bg-gray-300 mt-3 mb-2"></div>
+              <p className="text-sm text-gray-500 font-light">공지사항 및 소식을 확인하세요</p>
             </div>
 
             {loading ? (
-              <div className="text-center py-20 text-gray-400">
-                <p className="text-4xl mb-4">⏳</p>
-                <p>Loading posts...</p>
+              <div className="text-center py-16 text-gray-400">
+                <div className="w-6 h-6 border-2 border-black/20 border-t-black rounded-full animate-spin mx-auto mb-4"></div>
+                <p className="text-sm font-light">Loading posts...</p>
               </div>
             ) : posts.length === 0 ? (
-              <div className="text-center py-20 text-gray-400">
-                <p className="text-4xl mb-4">📝</p>
-                <p>아직 게시글이 없습니다.</p>
+              <div className="text-center py-16 text-gray-400">
+                <p className="text-2xl mb-3">📝</p>
+                <p className="text-sm font-light">아직 게시글이 없습니다.</p>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {posts.map((post, index) => (
                   <motion.div
                     key={post.id}
@@ -113,10 +119,10 @@ export default function BoardPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                     onClick={() => handlePostClick(post)}
-                    className="p-6 border border-gray-200 rounded-lg hover:border-beige-dark transition-colors cursor-pointer"
+                    className="p-5 border border-gray-200 rounded-lg hover:border-beige-dark hover:bg-beige-light/30 transition-all duration-300 cursor-pointer"
                   >
-                    <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
-                    <div className="flex gap-4 text-sm text-gray-600">
+                    <h3 className="text-base font-medium mb-1.5">{post.title}</h3>
+                    <div className="flex gap-3 text-xs text-gray-500 font-light">
                       <span>{post.author}</span>
                       <span>·</span>
                       <span>{formatDate(post.createdAt)}</span>
@@ -135,35 +141,33 @@ export default function BoardPage() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
           >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
               onClick={handleBack}
-              className="mb-6 text-gray-600 hover:text-black transition-colors"
+              className="mb-6 text-sm text-gray-500 font-light hover:text-black transition-colors"
             >
               ← 목록으로
-            </motion.button>
+            </button>
 
-            <div className="bg-beige-light p-8 rounded-lg">
-              <h1 className="text-3xl font-bold mb-4">{selectedPost.title}</h1>
-              <div className="flex gap-4 text-sm text-gray-600 mb-6 pb-6 border-b border-gray-300">
+            <div className="bg-beige-light p-6 md:p-8 rounded-lg">
+              <h1 className="text-xl md:text-2xl font-light text-black mb-4">{selectedPost.title}</h1>
+              <div className="flex gap-3 text-xs text-gray-500 font-light mb-6 pb-6 border-b border-beige-dark/30">
                 <span>{selectedPost.author}</span>
                 <span>·</span>
                 <span>{formatDate(selectedPost.createdAt)}</span>
               </div>
-              <div className="prose max-w-none whitespace-pre-wrap">
+              <div className="prose prose-sm max-w-none whitespace-pre-wrap font-light text-gray-700">
                 {selectedPost.content}
               </div>
 
               {selectedPost.files && Array.isArray(selectedPost.files) && selectedPost.files.length > 0 && (
-                <div className="mt-8 pt-6 border-t border-gray-300">
-                  <h3 className="font-semibold mb-3">첨부파일</h3>
+                <div className="mt-8 pt-6 border-t border-beige-dark/30">
+                  <h3 className="text-sm font-medium mb-3">첨부파일</h3>
                   <div className="space-y-2">
                     {selectedPost.files.map((file, idx) => (
                       <a
                         key={idx}
                         href={file.url}
-                        className="block text-blue-600 hover:underline"
+                        className="block text-sm font-light text-gray-600 hover:text-black transition-colors"
                       >
                         📎 {file.name}
                       </a>
