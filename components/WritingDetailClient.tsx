@@ -156,14 +156,45 @@ export default function WritingDetailClient({ writing, recentWritings }: Writing
 
           {/* Sidebar */}
           <aside className="lg:col-span-1">
-            <div className="sticky top-24 ml-auto max-w-[180px]">
+            {/* Mobile: Horizontal Scroll */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="lg:hidden bg-beige-light p-4 rounded-lg"
+            >
+              <h3 className="text-xs font-light text-gray-400 uppercase tracking-wider mb-4">Recent</h3>
+              <div className="flex gap-4 overflow-x-auto scrollbar-hide -mx-4 px-4">
+                {recentWritings.map((item) => (
+                  <Link key={item.id} href={`/writings/${item.id}`}>
+                    <div className="group cursor-pointer flex-shrink-0 w-40">
+                      <div className="aspect-video rounded overflow-hidden mb-1.5">
+                        <img
+                          src={item.thumbnail}
+                          alt={item.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                      <h4 className="font-light text-xs line-clamp-2 group-hover:text-beige-dark transition-colors">
+                        {item.title}
+                      </h4>
+                      <p className="text-[10px] text-gray-400 font-light mt-0.5">
+                        {new Date(item.createdAt).toLocaleDateString('ko-KR')}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Desktop: Vertical Sidebar */}
+            <div className="hidden lg:block sticky top-24 ml-auto max-w-[180px]">
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 className="bg-beige-light p-4 rounded-lg"
               >
                 <h3 className="text-xs font-light text-gray-400 uppercase tracking-wider text-center mb-4">Recent</h3>
-                <div className="space-y-4 max-h-[70vh] overflow-y-auto">
+                <div className="space-y-4 max-h-[70vh] overflow-y-auto scrollbar-thin">
                   {recentWritings.map((item) => (
                     <Link key={item.id} href={`/writings/${item.id}`}>
                       <div className="group cursor-pointer text-center">
