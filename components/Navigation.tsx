@@ -98,7 +98,7 @@ export default function Navigation() {
             <a
               key={item.id}
               role="menuitem"
-              href={item.isLink ? '/board' : `#${item.id}`}
+              href={item.isLink ? `/${item.id}` : `#${item.id}`}
               onClick={
                 item.isLink
                   ? undefined
@@ -166,7 +166,7 @@ export default function Navigation() {
                 <a
                   key={item.id}
                   role="menuitem"
-                  href={item.isLink ? '/board' : `#${item.id}`}
+                  href={item.isLink ? `/${item.id}` : `#${item.id}`}
                   onClick={
                     item.isLink
                       ? () => setIsMobileOpen(false)
