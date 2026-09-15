@@ -1,6 +1,8 @@
 {
   "nav": {
     "board": "Board",
+    "skills": "Skills",
+    "projects": "Projects",
     "writing": "Writing",
     "contact": "Contact"
   },
@@ -19,6 +21,10 @@
     "title": "Writing",
     "subtitle": "Sharing thoughts and experiences",
     "empty": "Posts coming soon"
+  },
+  "skills": {
+    "title": "Skills",
+    "subtitle": "Technical Expertise & Proficiency"
   },
   "contact": {
     "title": "",

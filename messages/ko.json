@@ -1,6 +1,8 @@
 {
   "nav": {
     "board": "Board",
+    "skills": "Skills",
+    "projects": "Projects",
     "writing": "Writing",
     "contact": "Contact"
   },
@@ -19,6 +21,10 @@
     "title": "Writing",
     "subtitle": "생각과 경험을 공유합니다",
     "empty": "글이 준비 중입니다"
+  },
+  "skills": {
+    "title": "Skills",
+    "subtitle": "기술 역량 및 숙련도"
   },
   "contact": {
     "title": "",
