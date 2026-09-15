@@ -67,9 +67,9 @@ export default function Contact() {
           {!showForm ? (
             <button
               onClick={() => setShowForm(true)}
-              className="inline-block px-8 md:px-8 py-3.5 md:py-3 border border-black text-base md:text-sm font-light
+              className="inline-block px-6 md:px-8 py-2.5 md:py-3 border border-black text-sm md:text-sm font-light
                          text-black hover:bg-black
-                         hover:text-white transition-all duration-300 rounded min-h-[48px]"
+                         hover:text-white transition-all duration-300 rounded min-h-[44px]"
             >
               javerdose@yahoo.com
             </button>

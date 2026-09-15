@@ -119,7 +119,7 @@ export default function Navigation() {
           </div>
 
           {/* 모바일 햄버거 버튼 */}
-          <div className="md:hidden flex items-center gap-3">
+          <div className="md:hidden flex items-center gap-3 ml-auto">
             {/* 모바일 언어 토글 */}
             <button
               onClick={() => setLocale(locale === 'ko' ? 'en' : 'ko')}
