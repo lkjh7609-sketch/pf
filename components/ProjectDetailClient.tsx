@@ -89,16 +89,19 @@ export default function ProjectDetailClient({ project, recentProjects }: Project
               )}
 
               {/* Markdown Content */}
-              <div className="prose prose-sm max-w-none prose-headings:font-light prose-headings:text-black prose-p:text-gray-600 prose-p:font-light">
+              <div className="prose prose-sm max-w-none prose-headings:font-light prose-headings:text-black prose-p:text-gray-600 prose-p:font-light prose-p:leading-relaxed">
                 {project.content ? (
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     rehypePlugins={[rehypeHighlight, rehypeRaw]}
                     components={{
+                      p: ({ children }) => (
+                        <p className="mb-4 whitespace-pre-wrap">{children}</p>
+                      ),
                       code: ({ node, inline, className, children, ...props }: any) => {
                         const match = /language-(\w+)/.exec(className || '')
                         return !inline ? (
-                          <div className="relative">
+                          <div className="relative my-4">
                             {match && (
                               <div className="absolute top-2 right-2 text-xs text-gray-400 uppercase">
                                 {match[1]}
@@ -109,7 +112,7 @@ export default function ProjectDetailClient({ project, recentProjects }: Project
                             </code>
                           </div>
                         ) : (
-                          <code className={className} {...props}>
+                          <code className={`${className} px-1 py-0.5 bg-gray-100 rounded text-sm`} {...props}>
                             {children}
                           </code>
                         )
