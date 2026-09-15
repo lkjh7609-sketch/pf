@@ -63,6 +63,7 @@ export default function WritingsManager() {
       link: '',
       category: '',
       tags: '',
+      bgmUrl: '',
     })
     setEditingWriting(null)
     setIsCreating(true)
