@@ -96,8 +96,14 @@ export default function WritingDetailClient({ writing, recentWritings }: Writing
                     rehypePlugins={[rehypeHighlight, rehypeRaw]}
                     components={{
                       p: ({ children }) => (
-                        <p className="mb-4 whitespace-pre-wrap">{children}</p>
+                        <p className="mb-4 whitespace-pre-line">{children}</p>
                       ),
+                      br: () => <br />,
+                      h1: ({ children }) => <h1 className="text-2xl font-light mb-4 mt-8">{children}</h1>,
+                      h2: ({ children }) => <h2 className="text-xl font-light mb-3 mt-6">{children}</h2>,
+                      h3: ({ children }) => <h3 className="text-lg font-light mb-2 mt-4">{children}</h3>,
+                      ul: ({ children }) => <ul className="list-disc pl-5 mb-4 space-y-2">{children}</ul>,
+                      ol: ({ children }) => <ol className="list-decimal pl-5 mb-4 space-y-2">{children}</ol>,
                       code: ({ node, inline, className, children, ...props }: any) => {
                         const match = /language-(\w+)/.exec(className || '')
                         return !inline ? (
