@@ -14,6 +14,7 @@ interface Project {
   link?: string
   category?: string
   tags?: string[]
+  bgmUrl?: string
   createdAt: string
 }
 
@@ -31,6 +32,7 @@ export default function ProjectsManager() {
     link: '',
     category: '',
     tags: '',
+    bgmUrl: '',
   })
   const [submitting, setSubmitting] = useState(false)
 
@@ -76,6 +78,7 @@ export default function ProjectsManager() {
       link: project.link || '',
       category: project.category || '',
       tags: (project.tags || []).join(', '),
+      bgmUrl: project.bgmUrl || '',
     })
     setEditingProject(project)
     setIsCreating(true)
@@ -100,6 +103,7 @@ export default function ProjectsManager() {
       link: formData.link || undefined,
       category: formData.category || null,
       tags: formData.tags ? formData.tags.split(',').map(t => t.trim()).filter(Boolean) : [],
+      bgmUrl: formData.bgmUrl || null,
     }
 
     console.log('Payload to send:', payload)
@@ -145,7 +149,7 @@ export default function ProjectsManager() {
         alert('프로젝트가 생성되었습니다.')
       }
       setIsCreating(false)
-      setFormData({ title: '', description: '', content: '', thumbnail: '', images: '', link: '', category: '', tags: '' })
+      setFormData({ title: '', description: '', content: '', thumbnail: '', images: '', link: '', category: '', tags: '', bgmUrl: '' })
       setEditingProject(null)
     } catch (error) {
       console.error('Error saving project:', error)
@@ -290,6 +294,20 @@ export default function ProjectsManager() {
             />
             <p className="text-xs text-gray-500 mt-1">
               Separate multiple tags with commas
+            </p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">BGM URL (optional) 🎵</label>
+            <input
+              type="text"
+              value={formData.bgmUrl}
+              onChange={(e) => setFormData({ ...formData, bgmUrl: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black"
+              placeholder="https://example.com/music.mp3"
+              disabled={submitting}
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              MP3/WAV 파일 URL을 입력하세요. 상세 페이지에서 재생 가능합니다.
             </p>
           </div>
           <div className="flex gap-4">

@@ -7,6 +7,7 @@ import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
 import rehypeRaw from 'rehype-raw'
 import 'highlight.js/styles/github-dark.css'
+import MusicPlayer from './MusicPlayer'
 
 interface Project {
   id: string
@@ -16,6 +17,7 @@ interface Project {
   thumbnail: string
   images: string[]
   link?: string | null
+  bgmUrl?: string | null
   createdAt: string
   updatedAt: string
 }
@@ -187,6 +189,9 @@ export default function ProjectDetailClient({ project, recentProjects }: Project
           </aside>
         </div>
       </div>
+
+      {/* Music Player */}
+      {project.bgmUrl && <MusicPlayer bgmUrl={project.bgmUrl} title={project.title} />}
     </div>
   )
 }

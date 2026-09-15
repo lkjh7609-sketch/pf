@@ -7,6 +7,7 @@ import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
 import rehypeRaw from 'rehype-raw'
 import 'highlight.js/styles/github-dark.css'
+import MusicPlayer from './MusicPlayer'
 
 interface Writing {
   id: string
@@ -16,6 +17,7 @@ interface Writing {
   thumbnail: string
   images: string[]
   link?: string | null
+  bgmUrl?: string | null
   createdAt: string
   updatedAt: string
 }
@@ -187,6 +189,9 @@ export default function WritingDetailClient({ writing, recentWritings }: Writing
           </aside>
         </div>
       </div>
+
+      {/* Music Player */}
+      {writing.bgmUrl && <MusicPlayer bgmUrl={writing.bgmUrl} title={writing.title} />}
     </div>
   )
 }

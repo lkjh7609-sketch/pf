@@ -24,7 +24,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json()
     console.log('Received body:', body)
-    const { title, description, content, thumbnail, images, link, category, tags } = body
+    const { title, description, content, thumbnail, images, link, category, tags, bgmUrl } = body
 
     const writing = await prisma.writing.create({
       data: {
@@ -36,6 +36,7 @@ export async function POST(request: Request) {
         link: link || null,
         category: category || null,
         tags: tags || [],
+        bgmUrl: bgmUrl || null,
       },
     })
 

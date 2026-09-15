@@ -21,6 +21,7 @@ model Project {
   link        String?
   category    String?  // Category: Backend, Frontend, FullStack, etc.
   tags        String[] // Tags: ABAP, Java, React, etc.
+  bgmUrl      String?  // Background music URL for detail page
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -37,6 +38,7 @@ model Writing {
   link        String?
   category    String?  // Category: Tech, Daily, Backend, etc.
   tags        String[] // Tags: ABAP, Node.js, Thoughts, etc.
+  bgmUrl      String?  // Background music URL for detail page
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
