@@ -178,7 +178,7 @@ export default function WritingsManager() {
   const handleCancel = () => {
     setIsCreating(false)
     setEditingWriting(null)
-    setFormData({ title: '', description: '', content: '', thumbnail: '', images: '', link: '', category: '', tags: '' })
+    setFormData({ title: '', description: '', content: '', thumbnail: '', images: '', link: '', category: '', tags: '', bgmUrl: '' })
   }
 
   if (loading) {
