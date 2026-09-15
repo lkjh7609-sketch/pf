@@ -11,6 +11,8 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
+  viewportFit: 'cover',
+  interactiveWidget: 'resizes-content',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#F5F1E8' },
     { media: '(prefers-color-scheme: dark)', color: '#1a1a1a' },
@@ -91,6 +93,13 @@ export const metadata: Metadata = {
       { url: '/icon.svg', type: 'image/svg+xml' },
     ],
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
+  },
+
+  // 웹 앱 메타데이터
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Ben Lee',
   },
 
   // 기타

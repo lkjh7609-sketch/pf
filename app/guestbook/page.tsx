@@ -77,34 +77,26 @@ export default function GuestbookPage() {
         animate={{ y: 0 }}
         className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm"
       >
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-end items-center">
-          <div className="flex gap-8 items-center">
-            <Link href="/">
-              <motion.span
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="text-sm hover:text-beige-dark transition-colors cursor-pointer"
-              >
-                Home
-              </motion.span>
-            </Link>
-            <span className="text-sm text-beige-dark cursor-default">
-              Guestbook
-            </span>
-          </div>
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-5 md:py-4 flex justify-between items-center">
+          <Link href="/" className="text-base md:text-sm font-semibold text-black hover:text-beige-dark transition-colors">
+            ← Home
+          </Link>
+          <span className="text-base md:text-sm text-beige-dark">
+            Guestbook
+          </span>
         </div>
       </motion.nav>
 
-      <div className="max-w-4xl mx-auto px-4 md:px-6 pt-24 pb-12">
+      <div className="max-w-4xl mx-auto px-6 md:px-6 pt-24 pb-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8 md:mb-10"
         >
-          <h1 className="text-xl md:text-2xl lg:text-3xl font-light text-black mb-3">Guestbook</h1>
+          <h1 className="text-2xl md:text-2xl lg:text-3xl font-light text-black mb-3">Guestbook</h1>
           <div className="w-12 h-px bg-gray-300 mx-auto mb-3"></div>
-          <p className="text-xs md:text-sm text-gray-500 font-light">응원의 메시지를 남겨주세요!</p>
+          <p className="text-sm md:text-sm text-gray-500 font-light">응원의 메시지를 남겨주세요!</p>
         </motion.div>
 
         {/* Write Form */}
@@ -112,16 +104,16 @@ export default function GuestbookPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-beige-light p-4 md:p-6 lg:p-8 rounded-lg mb-8 md:mb-10"
+          className="bg-beige-light p-6 md:p-6 lg:p-8 rounded-lg mb-8 md:mb-10"
         >
-          <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-4">
             <div>
-              <label className="block text-xs md:text-sm font-medium mb-1.5 md:mb-2">Name *</label>
+              <label className="block text-base md:text-sm font-medium mb-2 md:mb-2">Name *</label>
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-3 md:px-4 py-2 md:py-2.5 border border-gray-300 rounded focus:outline-none focus:border-black text-sm"
+                className="w-full px-4 md:px-4 py-3 md:py-2.5 border border-gray-300 rounded focus:outline-none focus:border-black text-base md:text-base"
                 placeholder="Your name"
                 required
                 disabled={submitting}
@@ -129,50 +121,50 @@ export default function GuestbookPage() {
             </div>
 
             <div>
-              <label className="block text-xs md:text-sm font-medium mb-1.5 md:mb-2">Message *</label>
+              <label className="block text-base md:text-sm font-medium mb-2 md:mb-2">Message *</label>
               <textarea
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 rows={4}
-                className="w-full px-3 md:px-4 py-2 md:py-2.5 border border-gray-300 rounded focus:outline-none focus:border-black resize-none text-sm"
+                className="w-full px-4 md:px-4 py-3 md:py-2.5 border border-gray-300 rounded focus:outline-none focus:border-black resize-none text-base md:text-base"
                 placeholder="Leave your message..."
                 required
                 disabled={submitting}
               />
             </div>
 
-            <div className="flex items-center gap-2">
+            <label htmlFor="isPublic" className="flex items-center gap-3 min-h-[44px] cursor-pointer">
               <input
                 type="checkbox"
                 id="isPublic"
                 checked={formData.isPublic}
                 onChange={(e) => setFormData({ ...formData, isPublic: e.target.checked })}
-                className="w-4 h-4"
+                className="w-5 h-5"
                 disabled={submitting}
               />
-              <label htmlFor="isPublic" className="text-xs text-gray-600 font-light">
+              <span className="text-sm md:text-xs text-gray-600 font-light">
                 공개 (체크 해제 시 관리자만 볼 수 있습니다)
-              </label>
-            </div>
+              </span>
+            </label>
 
             <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full md:w-auto px-6 md:px-8 py-2.5 md:py-3 bg-black text-white text-sm font-light
-                           hover:bg-gray-800 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed rounded"
+                className="w-full md:w-auto px-8 md:px-8 py-3.5 md:py-3 bg-black text-white text-base md:text-sm font-light
+                           hover:bg-gray-800 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed rounded min-h-[48px]"
               >
                 {submitting ? 'Submitting...' : 'Submit'}
               </button>
 
               {submitStatus === 'success' && (
-                <span className="text-green-600 text-xs font-light">
+                <span className="text-green-600 text-sm md:text-xs font-light">
                   ✓ 메시지가 제출되었습니다! 관리자 승인 후 표시됩니다.
                 </span>
               )}
 
               {submitStatus === 'error' && (
-                <span className="text-red-600 text-xs font-light">
+                <span className="text-red-600 text-sm md:text-xs font-light">
                   ✗ 제출에 실패했습니다. 다시 시도해주세요.
                 </span>
               )}

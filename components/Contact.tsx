@@ -69,7 +69,7 @@ export default function Contact() {
               onClick={() => setShowForm(true)}
               className="inline-block px-8 md:px-8 py-3.5 md:py-3 border border-black text-base md:text-sm font-light
                          text-black hover:bg-black
-                         hover:text-white transition-all duration-300 rounded"
+                         hover:text-white transition-all duration-300 rounded min-h-[48px]"
             >
               javerdose@yahoo.com
             </button>
@@ -86,7 +86,7 @@ export default function Contact() {
                     <h3 className="text-xl md:text-lg lg:text-xl font-semibold">Contact Form</h3>
                     <button
                       onClick={() => setShowForm(false)}
-                      className="text-gray-500 hover:text-black text-2xl md:text-2xl p-2"
+                      className="text-gray-500 hover:text-black text-2xl md:text-2xl p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
                       aria-label="Close form"
                     >
                       ✕
@@ -95,7 +95,7 @@ export default function Contact() {
 
                   <form onSubmit={handleSubmit} className="space-y-4 md:space-y-4">
                     <div>
-                      <label htmlFor="name" className="block text-sm md:text-sm font-medium mb-2 md:mb-2">
+                      <label htmlFor="name" className="block text-base md:text-sm font-medium mb-2 md:mb-2">
                         Name *
                       </label>
                       <input
@@ -103,14 +103,14 @@ export default function Contact() {
                         id="name"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-4 md:px-4 py-3 md:py-2.5 border border-gray-300 rounded focus:outline-none focus:border-black text-base md:text-sm"
+                        className="w-full px-4 md:px-4 py-3 md:py-2.5 border border-gray-300 rounded focus:outline-none focus:border-black text-base md:text-base"
                         required
                         disabled={status === 'sending'}
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="block text-sm md:text-sm font-medium mb-2 md:mb-2">
+                      <label htmlFor="email" className="block text-base md:text-sm font-medium mb-2 md:mb-2">
                         Email *
                       </label>
                       <input
@@ -118,14 +118,14 @@ export default function Contact() {
                         id="email"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-4 md:px-4 py-3 md:py-2.5 border border-gray-300 rounded focus:outline-none focus:border-black text-base md:text-sm"
+                        className="w-full px-4 md:px-4 py-3 md:py-2.5 border border-gray-300 rounded focus:outline-none focus:border-black text-base md:text-base"
                         required
                         disabled={status === 'sending'}
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="message" className="block text-sm md:text-sm font-medium mb-2 md:mb-2">
+                      <label htmlFor="message" className="block text-base md:text-sm font-medium mb-2 md:mb-2">
                         Message *
                       </label>
                       <textarea
@@ -133,7 +133,7 @@ export default function Contact() {
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         rows={5}
-                        className="w-full px-4 md:px-4 py-3 md:py-2.5 border border-gray-300 rounded focus:outline-none focus:border-black resize-none text-base md:text-sm"
+                        className="w-full px-4 md:px-4 py-3 md:py-2.5 border border-gray-300 rounded focus:outline-none focus:border-black resize-none text-base md:text-base"
                         required
                         disabled={status === 'sending'}
                       />
@@ -142,7 +142,7 @@ export default function Contact() {
                     <button
                       type="submit"
                       disabled={status === 'sending'}
-                      className="w-full px-8 md:px-8 py-3.5 md:py-3 bg-black text-white text-base md:text-sm hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed rounded"
+                      className="w-full px-8 md:px-8 py-3.5 md:py-3 bg-black text-white text-base md:text-sm hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed rounded min-h-[48px]"
                     >
                       {status === 'sending' ? 'Sending...' : 'Send Message'}
                     </button>

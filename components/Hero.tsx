@@ -6,8 +6,13 @@ import { useLanguage } from '@/contexts/LanguageContext'
 export default function Hero() {
   const { messages } = useLanguage()
 
+  const scrollToSkills = () => {
+    const element = document.getElementById('skills')
+    element?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center px-6 md:px-6 bg-beige-light">
+    <section id="hero" className="min-h-[100dvh] flex items-center justify-center px-6 md:px-6 bg-beige-light">
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -15,7 +20,7 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
         >
           <motion.h1
-            className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight mb-4 md:mb-4 text-black"
+            className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight mb-4 md:mb-4 text-black break-keep"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -33,7 +38,7 @@ export default function Hero() {
           </motion.p>
 
           <motion.p
-            className="text-base md:text-base lg:text-lg text-gray-600 font-light leading-relaxed px-2 md:px-0"
+            className="text-base md:text-base lg:text-lg text-gray-600 font-light leading-relaxed px-2 md:px-0 break-keep"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -50,13 +55,19 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1 }}
         >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="text-4xl md:text-4xl text-black"
+          <button
+            onClick={scrollToSkills}
+            className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] hover:scale-110 transition-transform"
+            aria-label="스킬 섹션으로 이동"
           >
-            ↓
-          </motion.div>
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="text-4xl md:text-4xl text-black"
+            >
+              ↓
+            </motion.div>
+          </button>
         </motion.div>
       </div>
     </section>

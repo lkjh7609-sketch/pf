@@ -47,7 +47,7 @@ export default function Skills() {
                 <h3 className="text-sm md:text-sm font-medium text-gray-400 uppercase tracking-wider mb-5">
                   {category.title}
                 </h3>
-                <div className="flex flex-wrap gap-3 md:gap-3">
+                <div className="flex flex-wrap gap-2.5 md:gap-3">
                   {category.skills.map((skill, idx) => (
                     <motion.div
                       key={skill}
@@ -56,7 +56,7 @@ export default function Skills() {
                       viewport={{ once: true }}
                       transition={{ delay: catIdx * 0.1 + idx * 0.05 }}
                       whileHover={{ y: -2 }}
-                      className="px-6 py-3.5 md:px-5 md:py-3 bg-white border border-gray-200 rounded-lg text-base md:text-sm font-light text-black
+                      className="px-3.5 py-2 md:px-5 md:py-3 bg-white border border-gray-200 rounded-lg text-xs sm:text-sm md:text-sm font-light text-black
                                  hover:border-beige-dark hover:shadow-sm transition-all duration-300 cursor-default"
                     >
                       {skill}

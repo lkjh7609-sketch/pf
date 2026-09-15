@@ -83,10 +83,19 @@ export default function Navigation() {
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 md:px-6 py-5 md:py-4 flex justify-end items-center">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-5 md:py-4 flex justify-between items-center">
+
+        {/* 모바일 브랜딩 로고 - 좌측 */}
+        <button
+          onClick={() => scrollToSection('hero')}
+          className="md:hidden text-lg font-semibold text-black hover:text-beige-dark transition-colors"
+          aria-label="홈으로 이동"
+        >
+          Ben Lee
+        </button>
 
         {/* 데스크톱 메뉴 */}
-        <div className="hidden md:flex gap-8 items-center" role="menubar">
+        <div className="hidden md:flex gap-8 items-center ml-auto" role="menubar">
           {NAV_ITEMS.map((item) => (
             <a
               key={item.id}
@@ -117,75 +126,101 @@ export default function Navigation() {
         </div>
 
         {/* 모바일 햄버거 버튼 - 터치 영역 증가 */}
-        <button
-          className="md:hidden flex flex-col gap-2 p-3 -mr-3"
-          onClick={() => setIsMobileOpen(!isMobileOpen)}
-          aria-expanded={isMobileOpen}
-          aria-controls="mobile-menu"
-          aria-label={isMobileOpen ? '메뉴 닫기' : '메뉴 열기'}
-        >
-          <span
-            className={`block w-7 h-0.5 bg-black transition-all duration-300 ${
-              isMobileOpen ? 'rotate-45 translate-y-2.5' : ''
-            }`}
-          />
-          <span
-            className={`block w-7 h-0.5 bg-black transition-all duration-300 ${
-              isMobileOpen ? 'opacity-0' : ''
-            }`}
-          />
-          <span
-            className={`block w-7 h-0.5 bg-black transition-all duration-300 ${
-              isMobileOpen ? '-rotate-45 -translate-y-2.5' : ''
-            }`}
-          />
-        </button>
+        <div className="md:hidden flex items-center gap-3">
+          {/* 모바일 언어 토글 */}
+          <button
+            onClick={() => setLocale(locale === 'ko' ? 'en' : 'ko')}
+            className="px-3 py-2 rounded-md bg-beige-dark/10 hover:bg-beige-dark/20 transition-all text-xs font-medium min-h-[44px] min-w-[44px] flex items-center justify-center"
+            aria-label="Toggle language"
+          >
+            {locale === 'ko' ? 'EN' : 'KO'}
+          </button>
+
+          <button
+            className="flex flex-col gap-2 p-3 -mr-3 min-h-[44px] min-w-[44px] justify-center"
+            onClick={() => setIsMobileOpen(!isMobileOpen)}
+            aria-expanded={isMobileOpen}
+            aria-controls="mobile-menu"
+            aria-label={isMobileOpen ? '메뉴 닫기' : '메뉴 열기'}
+          >
+            <span
+              className={`block w-7 h-0.5 bg-black transition-all duration-300 ${
+                isMobileOpen ? 'rotate-45 translate-y-2.5' : ''
+              }`}
+            />
+            <span
+              className={`block w-7 h-0.5 bg-black transition-all duration-300 ${
+                isMobileOpen ? 'opacity-0' : ''
+              }`}
+            />
+            <span
+              className={`block w-7 h-0.5 bg-black transition-all duration-300 ${
+                isMobileOpen ? '-rotate-45 -translate-y-2.5' : ''
+              }`}
+            />
+          </button>
+        </div>
       </div>
 
-      {/* 모바일 메뉴 */}
+      {/* 모바일 메뉴 - 풀스크린 오버레이 */}
       <AnimatePresence>
         {isMobileOpen && (
-          <motion.div
-            id="mobile-menu"
-            role="menu"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden overflow-hidden border-t border-gray-100"
-          >
-            <div className="px-6 py-6 space-y-2 bg-white/95 backdrop-blur-md">
-              {NAV_ITEMS.map((item) => (
-                <a
-                  key={item.id}
-                  role="menuitem"
-                  href={item.isLink ? `/${item.id}` : `#${item.id}`}
-                  onClick={
-                    item.isLink
-                      ? () => setIsMobileOpen(false)
-                      : (e) => {
-                          e.preventDefault()
-                          handleNavClick(item)
-                        }
-                  }
-                  className="block py-4 text-base font-light hover:text-beige-dark transition-colors border-b border-gray-100 last:border-0"
-                >
-                  {item.name}
-                </a>
-              ))}
+          <>
+            {/* 배경 오버레이 */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm md:hidden z-40"
+              onClick={() => setIsMobileOpen(false)}
+            />
 
-              {/* 모바일 토글 버튼 */}
-              <div className="pt-4">
+            {/* 메뉴 컨텐츠 */}
+            <motion.div
+              id="mobile-menu"
+              role="menu"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              className="fixed top-0 right-0 bottom-0 w-[280px] bg-white shadow-2xl md:hidden z-50 overflow-y-auto"
+            >
+              {/* 메뉴 헤더 */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-100">
+                <span className="text-lg font-semibold">Menu</span>
                 <button
-                  onClick={() => setLocale(locale === 'ko' ? 'en' : 'ko')}
-                  className="w-full px-4 py-3 rounded-md bg-beige-dark/10 hover:bg-beige-dark/20 transition-all text-sm font-medium"
-                  aria-label="Toggle language"
+                  onClick={() => setIsMobileOpen(false)}
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+                  aria-label="메뉴 닫기"
                 >
-                  {locale === 'ko' ? 'EN' : 'KO'}
+                  <span className="text-2xl">✕</span>
                 </button>
               </div>
-            </div>
-          </motion.div>
+
+              {/* 메뉴 항목 */}
+              <div className="py-4">
+                {NAV_ITEMS.map((item) => (
+                  <a
+                    key={item.id}
+                    role="menuitem"
+                    href={item.isLink ? `/${item.id}` : `#${item.id}`}
+                    onClick={
+                      item.isLink
+                        ? () => setIsMobileOpen(false)
+                        : (e) => {
+                            e.preventDefault()
+                            handleNavClick(item)
+                          }
+                    }
+                    className="block px-6 py-4 text-base font-light hover:bg-beige-light transition-colors border-b border-gray-50 last:border-0 min-h-[56px] flex items-center active:scale-95 active:bg-beige-dark/10"
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.nav>
