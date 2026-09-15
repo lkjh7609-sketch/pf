@@ -6,8 +6,9 @@ import Link from 'next/link'
 import ProjectsManager from './ProjectsManager'
 import WritingsManager from './WritingsManager'
 import PostsManager from './PostsManager'
+import GuestbookManager from './GuestbookManager'
 
-type Tab = 'projects' | 'writings' | 'posts'
+type Tab = 'posts' | 'projects' | 'writings' | 'guestbook'
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<Tab>('posts')
@@ -39,7 +40,7 @@ export default function AdminDashboard() {
         <div className="bg-white rounded-lg shadow">
           <div className="border-b border-gray-200">
             <nav className="flex gap-8 px-6">
-              {(['posts', 'projects', 'writings'] as Tab[]).map((tab) => (
+              {(['posts', 'projects', 'writings', 'guestbook'] as Tab[]).map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -49,7 +50,9 @@ export default function AdminDashboard() {
                       : 'border-transparent text-gray-500 hover:text-gray-700'
                   }`}
                 >
-                  {tab === 'posts' ? 'Board Posts' : tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  {tab === 'posts' ? 'Board Posts' :
+                   tab === 'guestbook' ? 'Guestbook' :
+                   tab.charAt(0).toUpperCase() + tab.slice(1)}
                 </button>
               ))}
             </nav>
@@ -59,6 +62,7 @@ export default function AdminDashboard() {
             {activeTab === 'posts' && <PostsManager />}
             {activeTab === 'projects' && <ProjectsManager />}
             {activeTab === 'writings' && <WritingsManager />}
+            {activeTab === 'guestbook' && <GuestbookManager />}
           </div>
         </div>
       </div>

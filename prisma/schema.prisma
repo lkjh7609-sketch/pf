@@ -48,3 +48,14 @@ model Post {
 
   @@map("posts")
 }
+
+model Guestbook {
+  id        String   @id @default(cuid())
+  name      String
+  message   String   @db.Text
+  isPublic  Boolean  @default(true) // true = public, false = private
+  approved  Boolean  @default(false) // Admin approval
+  createdAt DateTime @default(now())
+
+  @@map("guestbook")
+}

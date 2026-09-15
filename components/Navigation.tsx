@@ -17,6 +17,7 @@ export default function Navigation() {
 
   const NAV_ITEMS: NavItem[] = [
     { name: messages.nav.board, id: 'board', isLink: true },
+    { name: messages.nav.guestbook, id: 'guestbook', isLink: true },
     { name: messages.nav.skills, id: 'skills' },
     { name: messages.nav.projects, id: 'projects' },
     { name: messages.nav.writing, id: 'writings' },
