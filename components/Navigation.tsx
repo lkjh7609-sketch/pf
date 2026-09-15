@@ -16,11 +16,11 @@ export default function Navigation() {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
 
   const NAV_ITEMS: NavItem[] = [
-    { name: messages.nav.board, id: 'board', isLink: true },
-    { name: messages.nav.guestbook, id: 'guestbook', isLink: true },
-    { name: messages.nav.skills, id: 'skills' },
     { name: messages.nav.projects, id: 'projects' },
     { name: messages.nav.writing, id: 'writings' },
+    { name: messages.nav.skills, id: 'skills' },
+    { name: messages.nav.board, id: 'board', isLink: true },
+    { name: messages.nav.guestbook, id: 'guestbook', isLink: true },
     { name: messages.nav.contact, id: 'contact' },
   ]
 
@@ -83,14 +83,7 @@ export default function Navigation() {
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-        <button
-          onClick={() => scrollToSection('hero')}
-          className="text-xl font-bold hover:opacity-70 transition-opacity"
-          aria-label="홈으로 이동"
-        >
-          Ben Lee
-        </button>
+      <div className="max-w-6xl mx-auto px-6 py-4 flex justify-end items-center">
 
         {/* 데스크톱 메뉴 */}
         <div className="hidden md:flex gap-8 items-center" role="menubar">

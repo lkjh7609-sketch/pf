@@ -34,15 +34,7 @@ export default function ProjectDetailClient({ project, recentProjects }: Project
         animate={{ y: 0 }}
         className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm"
       >
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/">
-            <motion.span
-              whileHover={{ scale: 1.05 }}
-              className="text-xl font-bold hover:opacity-70 transition-opacity cursor-pointer"
-            >
-              Ben Lee
-            </motion.span>
-          </Link>
+        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-end items-center">
           <Link href="/#projects">
             <motion.span
               whileHover={{ scale: 1.05 }}
@@ -55,9 +47,9 @@ export default function ProjectDetailClient({ project, recentProjects }: Project
       </motion.nav>
 
       <div className="max-w-6xl mx-auto px-6 pt-24 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-10">
           {/* Main Content */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-4">
             <motion.article
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -153,28 +145,28 @@ export default function ProjectDetailClient({ project, recentProjects }: Project
 
           {/* Sidebar */}
           <aside className="lg:col-span-1">
-            <div className="sticky top-24">
+            <div className="sticky top-24 ml-auto max-w-[180px]">
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="bg-beige-light p-5 rounded-lg"
+                className="bg-beige-light p-4 rounded-lg"
               >
-                <h3 className="text-sm font-medium mb-4">Recent Projects</h3>
+                <h3 className="text-xs font-light text-gray-400 uppercase tracking-wider text-center mb-4">Recent</h3>
                 <div className="space-y-4 max-h-[70vh] overflow-y-auto">
                   {recentProjects.map((item) => (
                     <Link key={item.id} href={`/projects/${item.id}`}>
-                      <div className="group cursor-pointer">
-                        <div className="aspect-video rounded overflow-hidden mb-2">
+                      <div className="group cursor-pointer text-center">
+                        <div className="aspect-video rounded overflow-hidden mb-1.5">
                           <img
                             src={item.thumbnail}
                             alt={item.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                         </div>
-                        <h4 className="font-light text-sm line-clamp-2 group-hover:text-beige-dark transition-colors">
+                        <h4 className="font-light text-xs line-clamp-2 group-hover:text-beige-dark transition-colors">
                           {item.title}
                         </h4>
-                        <p className="text-xs text-gray-400 font-light mt-1">
+                        <p className="text-[10px] text-gray-400 font-light mt-0.5">
                           {new Date(item.createdAt).toLocaleDateString('ko-KR')}
                         </p>
                       </div>

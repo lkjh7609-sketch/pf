@@ -10,12 +10,12 @@
   "hero": {
     "name": "Ben Lee",
     "title": "ABAP, Back-end Developer",
-    "description": "안녕하세요. 이재헌입니다.",
-    "description2": "다양한 프로젝트와 생각을 공유합니다."
+    "description": "Hi, I'm Ben Jeahun Lee.",
+    "description2": "This is where my projects take shape, and my thoughts find room to wander."
   },
   "projects": {
     "title": "Projects",
-    "subtitle": "내가 작업한 프로젝트들",
+    "subtitle": "Selected Works",
     "empty": "프로젝트가 준비 중입니다"
   },
   "writings": {

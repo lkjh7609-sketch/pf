@@ -77,16 +77,7 @@ export default function GuestbookPage() {
         animate={{ y: 0 }}
         className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm"
       >
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/">
-            <motion.span
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="text-xl font-bold hover:opacity-70 transition-opacity cursor-pointer"
-            >
-              Ben Lee
-            </motion.span>
-          </Link>
+        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-end items-center">
           <div className="flex gap-8 items-center">
             <Link href="/">
               <motion.span
