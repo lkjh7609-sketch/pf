@@ -77,7 +77,7 @@ export default function BoardPage() {
         </div>
       </motion.nav>
 
-      <div className="max-w-4xl mx-auto px-6 pt-24 pb-12">
+      <div className="max-w-4xl mx-auto px-4 md:px-6 pt-24 pb-12">
         {/* Post List */}
         {!selectedPost && (
           <motion.div
@@ -85,24 +85,24 @@ export default function BoardPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
           >
-            <div className="mb-8">
-              <h1 className="text-2xl md:text-3xl font-light text-black">Board</h1>
-              <div className="w-12 h-px bg-gray-300 mt-3 mb-2"></div>
-              <p className="text-sm text-gray-500 font-light">공지사항 및 소식을 확인하세요</p>
+            <div className="mb-6 md:mb-8">
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-light text-black">Board</h1>
+              <div className="w-12 h-px bg-gray-300 mt-2 md:mt-3 mb-2"></div>
+              <p className="text-xs md:text-sm text-gray-500 font-light">공지사항 및 소식을 확인하세요</p>
             </div>
 
             {loading ? (
-              <div className="text-center py-16 text-gray-400">
+              <div className="text-center py-12 md:py-16 text-gray-400">
                 <div className="w-6 h-6 border-2 border-black/20 border-t-black rounded-full animate-spin mx-auto mb-4"></div>
-                <p className="text-sm font-light">Loading posts...</p>
+                <p className="text-xs md:text-sm font-light">Loading posts...</p>
               </div>
             ) : posts.length === 0 ? (
-              <div className="text-center py-16 text-gray-400">
-                <p className="text-2xl mb-3">📝</p>
-                <p className="text-sm font-light">아직 게시글이 없습니다.</p>
+              <div className="text-center py-12 md:py-16 text-gray-400">
+                <p className="text-2xl md:text-3xl mb-3">📝</p>
+                <p className="text-xs md:text-sm font-light">아직 게시글이 없습니다.</p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-2.5 md:space-y-3">
                 {posts.map((post, index) => (
                   <motion.div
                     key={post.id}
@@ -110,13 +110,13 @@ export default function BoardPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                     onClick={() => handlePostClick(post)}
-                    className="p-5 border border-gray-200 rounded-lg hover:border-beige-dark hover:bg-beige-light/30 transition-all duration-300 cursor-pointer"
+                    className="p-4 md:p-5 border border-gray-200 rounded-lg hover:border-beige-dark hover:bg-beige-light/30 transition-all duration-300 cursor-pointer"
                   >
-                    <h3 className="text-base font-medium mb-1.5">{post.title}</h3>
-                    <div className="flex gap-3 text-xs text-gray-500 font-light">
-                      <span>{post.author}</span>
+                    <h3 className="text-sm md:text-base font-medium mb-1.5 line-clamp-2">{post.title}</h3>
+                    <div className="flex gap-2 md:gap-3 text-xs text-gray-500 font-light">
+                      <span className="truncate max-w-[120px] md:max-w-none">{post.author}</span>
                       <span>·</span>
-                      <span>{formatDate(post.createdAt)}</span>
+                      <span className="whitespace-nowrap">{formatDate(post.createdAt)}</span>
                     </div>
                   </motion.div>
                 ))}
@@ -134,31 +134,35 @@ export default function BoardPage() {
           >
             <button
               onClick={handleBack}
-              className="mb-6 text-sm text-gray-500 font-light hover:text-black transition-colors"
+              className="mb-4 md:mb-6 text-xs md:text-sm text-gray-500 font-light hover:text-black transition-colors"
             >
               ← 목록으로
             </button>
 
-            <div className="bg-beige-light p-6 md:p-8 rounded-lg">
-              <h1 className="text-xl md:text-2xl font-light text-black mb-4">{selectedPost.title}</h1>
-              <div className="flex gap-3 text-xs text-gray-500 font-light mb-6 pb-6 border-b border-beige-dark/30">
-                <span>{selectedPost.author}</span>
+            <div className="bg-beige-light p-4 md:p-6 lg:p-8 rounded-lg">
+              <h1 className="text-lg md:text-xl lg:text-2xl font-light text-black mb-3 md:mb-4 break-words">
+                {selectedPost.title}
+              </h1>
+              <div className="flex gap-2 md:gap-3 text-xs text-gray-500 font-light mb-4 md:mb-6 pb-4 md:pb-6 border-b border-beige-dark/30">
+                <span className="truncate max-w-[120px] md:max-w-none">{selectedPost.author}</span>
                 <span>·</span>
-                <span>{formatDate(selectedPost.createdAt)}</span>
+                <span className="whitespace-nowrap">{formatDate(selectedPost.createdAt)}</span>
               </div>
-              <div className="prose prose-sm max-w-none whitespace-pre-wrap font-light text-gray-700">
+              <div className="prose prose-sm max-w-none whitespace-pre-wrap font-light text-gray-700 text-sm md:text-base break-words">
                 {selectedPost.content}
               </div>
 
               {selectedPost.files && Array.isArray(selectedPost.files) && selectedPost.files.length > 0 && (
-                <div className="mt-8 pt-6 border-t border-beige-dark/30">
-                  <h3 className="text-sm font-medium mb-3">첨부파일</h3>
-                  <div className="space-y-2">
+                <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-beige-dark/30">
+                  <h3 className="text-xs md:text-sm font-medium mb-2 md:mb-3">첨부파일</h3>
+                  <div className="space-y-1.5 md:space-y-2">
                     {selectedPost.files.map((file, idx) => (
                       <a
                         key={idx}
                         href={file.url}
-                        className="block text-sm font-light text-gray-600 hover:text-black transition-colors"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block text-xs md:text-sm font-light text-gray-600 hover:text-black transition-colors truncate"
                       >
                         📎 {file.name}
                       </a>

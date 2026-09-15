@@ -80,12 +80,12 @@ export default function GuestbookManager() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold">Manage Guestbook</h2>
-        <div className="flex gap-2">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
+        <h2 className="text-lg md:text-xl font-semibold">Manage Guestbook</h2>
+        <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setFilter('all')}
-            className={`px-3 py-1 text-sm rounded ${
+            className={`px-3 py-1.5 text-xs md:text-sm rounded ${
               filter === 'all' ? 'bg-black text-white' : 'bg-gray-200'
             }`}
           >
@@ -93,7 +93,7 @@ export default function GuestbookManager() {
           </button>
           <button
             onClick={() => setFilter('pending')}
-            className={`px-3 py-1 text-sm rounded ${
+            className={`px-3 py-1.5 text-xs md:text-sm rounded ${
               filter === 'pending' ? 'bg-black text-white' : 'bg-gray-200'
             }`}
           >
@@ -101,7 +101,7 @@ export default function GuestbookManager() {
           </button>
           <button
             onClick={() => setFilter('approved')}
-            className={`px-3 py-1 text-sm rounded ${
+            className={`px-3 py-1.5 text-xs md:text-sm rounded ${
               filter === 'approved' ? 'bg-black text-white' : 'bg-gray-200'
             }`}
           >
@@ -121,56 +121,61 @@ export default function GuestbookManager() {
               key={entry.id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="border border-gray-200 rounded-lg p-4"
+              className="border border-gray-200 rounded-lg p-3 md:p-4"
             >
-              <div className="flex justify-between items-start mb-3">
-                <div className="flex items-center gap-3">
-                  <span className="font-semibold">{entry.name}</span>
+              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
+                <div className="flex items-center flex-wrap gap-2">
+                  <span className="font-semibold text-sm md:text-base">{entry.name}</span>
                   {entry.isPublic ? (
-                    <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
+                    <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">
                       Public
                     </span>
                   ) : (
-                    <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
+                    <span className="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">
                       Private
                     </span>
                   )}
                   {entry.approved ? (
-                    <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
+                    <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">
                       Approved
                     </span>
                   ) : (
-                    <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded">
+                    <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded">
                       Pending
                     </span>
                   )}
                 </div>
-                <span className="text-sm text-gray-500">
-                  {new Date(entry.createdAt).toLocaleString('ko-KR')}
+                <span className="text-xs md:text-sm text-gray-500">
+                  {new Date(entry.createdAt).toLocaleString('ko-KR', {
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
                 </span>
               </div>
 
-              <p className="text-gray-700 whitespace-pre-wrap mb-4">{entry.message}</p>
+              <p className="text-sm md:text-base text-gray-700 whitespace-pre-wrap mb-4">{entry.message}</p>
 
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 {!entry.approved ? (
                   <button
                     onClick={() => handleApprove(entry.id, true)}
-                    className="px-3 py-1 text-sm bg-green-500 text-white rounded hover:bg-green-600"
+                    className="px-3 py-1.5 text-xs md:text-sm bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
                   >
                     Approve
                   </button>
                 ) : (
                   <button
                     onClick={() => handleApprove(entry.id, false)}
-                    className="px-3 py-1 text-sm bg-gray-500 text-white rounded hover:bg-gray-600"
+                    className="px-3 py-1.5 text-xs md:text-sm bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
                   >
                     Unapprove
                   </button>
                 )}
                 <button
                   onClick={() => handleDelete(entry.id)}
-                  className="px-3 py-1 text-sm border border-red-300 text-red-600 rounded hover:bg-red-50"
+                  className="px-3 py-1.5 text-xs md:text-sm border border-red-300 text-red-600 rounded hover:bg-red-50 transition-colors"
                 >
                   Delete
                 </button>

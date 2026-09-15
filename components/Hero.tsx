@@ -7,7 +7,7 @@ export default function Hero() {
   const { messages } = useLanguage()
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center px-6 bg-beige-light">
+    <section id="hero" className="min-h-screen flex items-center justify-center px-4 md:px-6 bg-beige-light">
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -15,7 +15,7 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
         >
           <motion.h1
-            className="text-3xl md:text-5xl font-light tracking-tight mb-4 text-black"
+            className="text-2xl md:text-4xl lg:text-5xl font-light tracking-tight mb-3 md:mb-4 text-black"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -24,7 +24,7 @@ export default function Hero() {
           </motion.h1>
 
           <motion.p
-            className="text-lg md:text-xl text-gray-500 font-light mb-8"
+            className="text-base md:text-lg lg:text-xl text-gray-500 font-light mb-6 md:mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -33,7 +33,7 @@ export default function Hero() {
           </motion.p>
 
           <motion.p
-            className="text-base md:text-lg text-gray-600 font-light leading-relaxed"
+            className="text-sm md:text-base lg:text-lg text-gray-600 font-light leading-relaxed px-4 md:px-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -45,7 +45,7 @@ export default function Hero() {
         </motion.div>
 
         <motion.div
-          className="mt-12"
+          className="mt-8 md:mt-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1 }}
@@ -53,7 +53,7 @@ export default function Hero() {
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="text-4xl text-black"
+            className="text-3xl md:text-4xl text-black"
           >
             ↓
           </motion.div>

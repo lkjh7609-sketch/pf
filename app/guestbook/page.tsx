@@ -95,16 +95,16 @@ export default function GuestbookPage() {
         </div>
       </motion.nav>
 
-      <div className="max-w-4xl mx-auto px-6 pt-24 pb-12">
+      <div className="max-w-4xl mx-auto px-4 md:px-6 pt-24 pb-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-10"
+          className="text-center mb-8 md:mb-10"
         >
-          <h1 className="text-2xl md:text-3xl font-light text-black mb-3">Guestbook</h1>
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-light text-black mb-3">Guestbook</h1>
           <div className="w-12 h-px bg-gray-300 mx-auto mb-3"></div>
-          <p className="text-sm text-gray-500 font-light">응원의 메시지를 남겨주세요!</p>
+          <p className="text-xs md:text-sm text-gray-500 font-light">응원의 메시지를 남겨주세요!</p>
         </motion.div>
 
         {/* Write Form */}
@@ -112,16 +112,16 @@ export default function GuestbookPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-beige-light p-6 md:p-8 rounded-lg mb-10"
+          className="bg-beige-light p-4 md:p-6 lg:p-8 rounded-lg mb-8 md:mb-10"
         >
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-2">Name *</label>
+              <label className="block text-xs md:text-sm font-medium mb-1.5 md:mb-2">Name *</label>
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black text-sm"
+                className="w-full px-3 md:px-4 py-2 md:py-2.5 border border-gray-300 rounded focus:outline-none focus:border-black text-sm"
                 placeholder="Your name"
                 required
                 disabled={submitting}
@@ -129,12 +129,12 @@ export default function GuestbookPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Message *</label>
+              <label className="block text-xs md:text-sm font-medium mb-1.5 md:mb-2">Message *</label>
               <textarea
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 rows={4}
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black resize-none text-sm"
+                className="w-full px-3 md:px-4 py-2 md:py-2.5 border border-gray-300 rounded focus:outline-none focus:border-black resize-none text-sm"
                 placeholder="Leave your message..."
                 required
                 disabled={submitting}
@@ -155,12 +155,12 @@ export default function GuestbookPage() {
               </label>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
               <button
                 type="submit"
                 disabled={submitting}
-                className="px-8 py-3 bg-black text-white text-sm font-light
-                           hover:bg-gray-800 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full md:w-auto px-6 md:px-8 py-2.5 md:py-3 bg-black text-white text-sm font-light
+                           hover:bg-gray-800 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed rounded"
               >
                 {submitting ? 'Submitting...' : 'Submit'}
               </button>
@@ -182,43 +182,50 @@ export default function GuestbookPage() {
 
         {/* Entries List */}
         <div>
-          <h2 className="text-lg font-light text-black mb-4">Messages ({entries.length})</h2>
-          <div className="w-12 h-px bg-gray-300 mb-6"></div>
+          <h2 className="text-base md:text-lg font-light text-black mb-3 md:mb-4">
+            Messages ({entries.length})
+          </h2>
+          <div className="w-12 h-px bg-gray-300 mb-4 md:mb-6"></div>
 
           {loading ? (
-            <div className="text-center py-12">
+            <div className="text-center py-12 md:py-16">
               <div className="w-6 h-6 border-2 border-black/20 border-t-black rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-sm text-gray-400 font-light">Loading...</p>
+              <p className="text-xs md:text-sm text-gray-400 font-light">Loading...</p>
             </div>
           ) : entries.length === 0 ? (
-            <div className="text-center py-12 text-gray-400">
-              <p className="text-2xl mb-3">📝</p>
-              <p className="text-sm font-light">아직 메시지가 없습니다. 첫 번째 메시지를 남겨주세요!</p>
+            <div className="text-center py-12 md:py-16 text-gray-400">
+              <p className="text-2xl md:text-3xl mb-3">📝</p>
+              <p className="text-xs md:text-sm font-light">아직 메시지가 없습니다. 첫 번째 메시지를 남겨주세요!</p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-2.5 md:space-y-3">
               {entries.map((entry, index) => (
                 <motion.div
                   key={entry.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className="bg-white border border-gray-200 rounded-lg p-5 hover:border-beige-dark/50 transition-all duration-300"
+                  className="bg-white border border-gray-200 rounded-lg p-4 md:p-5 hover:border-beige-dark/50 transition-all duration-300"
                 >
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-sm">{entry.name}</span>
+                  <div className="flex items-start justify-between mb-2 gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-medium text-xs md:text-sm">{entry.name}</span>
                       {entry.isPublic && (
                         <span className="text-xs bg-beige-light text-gray-600 px-2 py-0.5 rounded">
                           Public
                         </span>
                       )}
                     </div>
-                    <span className="text-xs text-gray-400 font-light">
-                      {new Date(entry.createdAt).toLocaleDateString('ko-KR')}
+                    <span className="text-xs text-gray-400 font-light whitespace-nowrap">
+                      {new Date(entry.createdAt).toLocaleDateString('ko-KR', {
+                        month: '2-digit',
+                        day: '2-digit'
+                      })}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600 font-light whitespace-pre-wrap">{entry.message}</p>
+                  <p className="text-xs md:text-sm text-gray-600 font-light whitespace-pre-wrap break-words">
+                    {entry.message}
+                  </p>
                 </motion.div>
               ))}
             </div>
