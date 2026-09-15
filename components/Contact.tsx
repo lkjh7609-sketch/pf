@@ -71,7 +71,7 @@ export default function Contact() {
                          text-black hover:bg-black
                          hover:text-white transition-all duration-300 rounded"
             >
-              javerdose@gmail.com
+              javerdose@yahoo.com
             </button>
           ) : (
             <AnimatePresence>
